@@ -48,7 +48,9 @@ export async function closeDb(): Promise<void> {
 // Typed collection accessors. We store our string `id` on documents and keep
 // Mongo's `_id` internal; responses strip `_id`.
 export const collections = {
-  team: () => getDb().collection<TeamMember>("team"),
+  // Renamed from "team" → "staff" so it never collides with the portfolio
+  // site's own "team" collection when both apps share the "silifton" database.
+  team: () => getDb().collection<TeamMember>("staff"),
   clients: () => getDb().collection<Client>("clients"),
   projects: () => getDb().collection<Project>("projects"),
   tasks: () => getDb().collection<Task>("tasks"),
