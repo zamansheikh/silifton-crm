@@ -1,0 +1,22 @@
+# --- secrets (NEVER commit) ---
+cred.txt
+**/.env
+**/.env.*
+!**/.env.example
+
+# --- dependencies ---
+**/node_modules/
+
+# --- build output ---
+backend/dist/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+**/*.tsbuildinfo
+
+# --- misc ---
+/Design/
+.DS_Store
+*.log
+npm-debug.log*
+.vercel

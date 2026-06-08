@@ -1,0 +1,457 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Silifton · Nebula theme
+ * Light/dark mode + accent palette + density via CSS custom props.
+ * Toggled by changing data-theme / data-accent / data-density on :root.
+ * ───────────────────────────────────────────────────────────────────── */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+}
+* { box-sizing: border-box; }
+button { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Dark (default) ───────────────────────────────────────────────── */
+:root, :root[data-theme="dark"] {
+  --bg: #0a0814;
+  --bg-deep: #06040d;
+  --bg-elevate: #14102a;
+  --surface: rgba(28, 22, 52, 0.55);
+  --surface-solid: #15102b;
+  --surface-hi: #1c1638;
+  --border: rgba(167, 139, 250, 0.14);
+  --border-hi: rgba(167, 139, 250, 0.28);
+  --border-strong: rgba(167, 139, 250, 0.40);
+
+  --text: #f1eefa;
+  --text-sub: #a39cc4;
+  --text-dim: #6e6890;
+  --text-soft: #4e4970;
+
+  --success: #34d399;
+  --success-soft: #6ee7b7;
+  --warning: #fbbf24;
+  --warning-soft: #fcd34d;
+  --danger: #fb7185;
+  --danger-soft: #fda4af;
+  --info: #22d3ee;
+
+  --hero-grad: linear-gradient(135deg, #1f0f44 0%, #2b1454 40%, #401a4f 70%, #1a0a35 100%);
+  --topbar-bg: #0a0814;
+  --on-accent: #ffffff;
+
+  --ring-bg: #0a0814;
+  --scrim: rgba(6, 4, 13, 0.7);
+
+  --grid-line: rgba(167, 139, 250, 0.04);
+
+  color-scheme: dark;
+}
+
+/* ── Light ──────────────────────────────────────────────────────────── */
+:root[data-theme="light"] {
+  --bg: #faf8ff;
+  --bg-deep: #f3eefb;
+  --bg-elevate: #ffffff;
+  --surface: rgba(124, 58, 237, 0.04);
+  --surface-solid: #ffffff;
+  --surface-hi: #f7f3ff;
+  --border: rgba(124, 58, 237, 0.12);
+  --border-hi: rgba(124, 58, 237, 0.22);
+  --border-strong: rgba(124, 58, 237, 0.40);
+
+  --text: #18112e;
+  --text-sub: #4c4368;
+  --text-dim: #7a708f;
+  --text-soft: #ada4c2;
+
+  --success: #059669;
+  --success-soft: #34d399;
+  --warning: #d97706;
+  --warning-soft: #f59e0b;
+  --danger: #dc2626;
+  --danger-soft: #f87171;
+  --info: #0891b2;
+
+  --hero-grad: linear-gradient(135deg, #ede9fe 0%, #fce7f3 40%, #e0f2fe 80%, #f3e8ff 100%);
+  --topbar-bg: #ffffff;
+  --on-accent: #ffffff;
+
+  --ring-bg: #ffffff;
+  --scrim: rgba(15, 10, 31, 0.4);
+
+  --grid-line: rgba(124, 58, 237, 0.06);
+
+  color-scheme: light;
+}
+
+/* ── Accents ────────────────────────────────────────────────────────── */
+:root, :root[data-accent="violet"] {
+  --accent: #a855f7;
+  --accent-2: #f472b6;
+  --accent-3: #fbbf24;
+  --accent-soft: #c4b5fd;
+  --accent-deep: #7c3aed;
+  --accent-grad: linear-gradient(135deg, #a855f7, #f472b6);
+  --accent-grad-3: linear-gradient(135deg, #a855f7, #f472b6, #fbbf24);
+  --accent-glow: 0 0 24px rgba(168, 85, 247, 0.45);
+}
+:root[data-accent="cyan"] {
+  --accent: #06b6d4;
+  --accent-2: #a855f7;
+  --accent-3: #22d3ee;
+  --accent-soft: #67e8f9;
+  --accent-deep: #0e7490;
+  --accent-grad: linear-gradient(135deg, #06b6d4, #a855f7);
+  --accent-grad-3: linear-gradient(135deg, #06b6d4, #22d3ee, #a855f7);
+  --accent-glow: 0 0 24px rgba(6, 182, 212, 0.50);
+}
+:root[data-accent="pink"] {
+  --accent: #ec4899;
+  --accent-2: #f97316;
+  --accent-3: #a855f7;
+  --accent-soft: #f9a8d4;
+  --accent-deep: #be185d;
+  --accent-grad: linear-gradient(135deg, #ec4899, #f97316);
+  --accent-grad-3: linear-gradient(135deg, #ec4899, #f97316, #a855f7);
+  --accent-glow: 0 0 24px rgba(236, 72, 153, 0.45);
+}
+:root[data-accent="emerald"] {
+  --accent: #10b981;
+  --accent-2: #06b6d4;
+  --accent-3: #a855f7;
+  --accent-soft: #6ee7b7;
+  --accent-deep: #047857;
+  --accent-grad: linear-gradient(135deg, #10b981, #06b6d4);
+  --accent-grad-3: linear-gradient(135deg, #10b981, #06b6d4, #a855f7);
+  --accent-glow: 0 0 24px rgba(16, 185, 129, 0.45);
+}
+:root[data-accent="amber"] {
+  --accent: #f59e0b;
+  --accent-2: #ec4899;
+  --accent-3: #a855f7;
+  --accent-soft: #fcd34d;
+  --accent-deep: #b45309;
+  --accent-grad: linear-gradient(135deg, #f59e0b, #ec4899);
+  --accent-grad-3: linear-gradient(135deg, #f59e0b, #ec4899, #a855f7);
+  --accent-glow: 0 0 24px rgba(245, 158, 11, 0.50);
+}
+
+/* ── Density ────────────────────────────────────────────────────────── */
+:root, :root[data-density="comfortable"] {
+  --pad-x: 22px;
+  --pad-y: 16px;
+  --gap: 14px;
+  --row-y: 13px;
+  --font-base: 13px;
+  --font-sm: 12px;
+  --font-xs: 10.5px;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+:root[data-density="compact"] {
+  --pad-x: 16px;
+  --pad-y: 11px;
+  --gap: 9px;
+  --row-y: 8px;
+  --font-base: 12px;
+  --font-sm: 11px;
+  --font-xs: 10px;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+/* ── Scrollbars ─────────────────────────────────────────────────────── */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 99px; border: 2px solid transparent; background-clip: padding-box; }
+*::-webkit-scrollbar-thumb:hover { background: var(--border-strong); background-clip: padding-box; border: 2px solid transparent; }
+
+/* ── Reused atomic classes ──────────────────────────────────────────── */
+.surface { background: var(--surface-solid); border: 1px solid var(--border); border-radius: var(--radius); }
+.surface-frosted { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+.mono { font-family: 'Geist Mono', ui-monospace, monospace; letter-spacing: 0.4px; }
+.serif { font-family: 'Instrument Serif', serif; }
+.italic-serif { font-family: 'Instrument Serif', serif; font-style: italic; }
+.eyebrow { font-family: 'Geist Mono', monospace; font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-dim); }
+
+/* ── App shell layout ───────────────────────────────────────────────── */
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-w, 236px) 1fr;
+  height: 100vh;
+  height: 100dvh; /* dynamic viewport height — excludes mobile browser chrome */
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+:root, :root[data-sidebar="expanded"] { --sidebar-w: 236px; }
+:root[data-sidebar="collapsed"] { --sidebar-w: 64px; }
+
+/* Body ambient bg glow */
+.ambient-bg::before, .ambient-bg::after {
+  content: ''; position: fixed; pointer-events: none; border-radius: 50%; filter: blur(40px); z-index: 0;
+}
+.ambient-bg::before {
+  top: -200px; right: -150px; width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--accent), transparent 60%);
+  opacity: 0.10;
+}
+.ambient-bg::after {
+  bottom: -200px; left: 30%; width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--accent-2), transparent 60%);
+  opacity: 0.08;
+}
+:root[data-theme="light"] .ambient-bg::before { opacity: 0.18; }
+:root[data-theme="light"] .ambient-bg::after { opacity: 0.14; }
+
+/* ── Buttons ────────────────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: all .14s; border: 1px solid var(--border); background: var(--surface-solid); color: var(--text); white-space: nowrap; }
+.btn:hover { border-color: var(--border-hi); background: var(--surface-hi); }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--text-sub); }
+.btn-ghost:hover { background: var(--surface); color: var(--text); }
+.btn-primary { background: var(--accent-grad); border: 1px solid transparent; color: var(--on-accent); font-weight: 600; box-shadow: 0 4px 16px color-mix(in oklab, var(--accent) 35%, transparent), 0 0 0 1px rgba(255,255,255,.16) inset; }
+.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 8px 22px color-mix(in oklab, var(--accent) 45%, transparent), 0 0 0 1px rgba(255,255,255,.18) inset; }
+.btn-icon { width: 32px; height: 32px; padding: 0; justify-content: center; }
+.btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+/* ── Chips / tags / pills ───────────────────────────────────────────── */
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 500; border: 1px solid var(--border); background: var(--surface); color: var(--text-sub); }
+.chip-dot { width: 5px; height: 5px; border-radius: 99px; }
+
+/* ── Avatars ────────────────────────────────────────────────────────── */
+.avatar { display: inline-flex; align-items: center; justify-content: center; border-radius: 99px; color: #fff; font-weight: 600; flex: 0 0 auto; font-family: 'Geist', sans-serif; }
+.avatar-stack > * + * { margin-left: -7px; }
+
+/* ── Inputs ─────────────────────────────────────────────────────────── */
+.input {
+  width: 100%; padding: 9px 12px; border-radius: var(--radius-sm);
+  background: var(--surface-solid); border: 1px solid var(--border);
+  color: var(--text); font-size: 13px; outline: none; transition: all .14s;
+  font-family: inherit;
+}
+.input:focus { border-color: var(--border-strong); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 18%, transparent); }
+.input::placeholder { color: var(--text-dim); }
+
+/* ── Focus rings ────────────────────────────────────────────────────── */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Glow utilities ─────────────────────────────────────────────────── */
+.glow-dot { box-shadow: 0 0 8px currentColor; }
+
+/* ── Animations ─────────────────────────────────────────────────────── */
+@keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+@keyframes glow-rotate { to { transform: rotate(360deg); } }
+@keyframes fade-up { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes drawer-in { 0% { transform: translateX(40px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+@keyframes scrim-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.pulse { animation: pulse-soft 1.6s ease-in-out infinite; }
+.fade-up { animation: fade-up .35s ease-out forwards; }
+.spin { animation: spin .8s linear infinite; }
+
+:root[data-theme="light"] .surface-solid-card { box-shadow: 0 1px 0 rgba(0,0,0,.02), 0 4px 16px rgba(99, 51, 169, 0.05); }
+
+/* ── Responsive topbar ──────────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  .topbar-live-pill { display: none !important; }
+}
+@media (max-width: 1100px) {
+  .topbar-invite-btn { display: none !important; }
+}
+@media (max-width: 980px) {
+  .topbar-new-text { display: none; }
+}
+
+.nav-item { -webkit-appearance: none; appearance: none; }
+.screen-scroll { flex: 1; overflow: auto; position: relative; z-index: 1; }
+
+/* ── Mobile responsive (<=768px) ────────────────────────────────────── */
+.mobile-only { display: none !important; }
+.nav-scrim { display: none; }
+
+@media (max-width: 768px) {
+  /* The sidebar becomes a slide-in overlay drawer toggled from the topbar. */
+  .app-shell { grid-template-columns: 1fr; }
+
+  /* Breathing room at the end of every page so the last section clears the
+     browser's bottom chrome / any floating widget and is fully scrollable. */
+  .screen-scroll { padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }
+
+  /* Task drawer: full-screen on mobile with its body stacked to one column,
+     so the close button (top-right) is reachable and nothing is squished. */
+  .task-drawer { width: 100vw !important; }
+  .task-drawer-body { grid-template-columns: 1fr !important; }
+
+  /* Notifications dropdown: never wider than the screen. */
+  .notif-panel { width: min(340px, calc(100vw - 20px)) !important; }
+  .app-sidebar {
+    /* !important overrides the component's inline position:relative / zIndex. */
+    position: fixed !important;
+    top: 0; bottom: 0; left: 0; height: 100dvh;
+    width: 272px; max-width: 84vw;
+    transform: translateX(-100%);
+    transition: transform .25s cubic-bezier(.4,.2,.2,1) !important;
+    z-index: 90 !important;
+    box-shadow: 0 0 40px rgba(0,0,0,.5);
+  }
+  .app-shell.nav-open .app-sidebar { transform: translateX(0); }
+  .nav-scrim {
+    display: block; position: fixed; inset: 0;
+    background: var(--scrim); backdrop-filter: blur(2px);
+    z-index: 85; animation: scrim-in .2s ease-out;
+  }
+  .mobile-only { display: inline-flex !important; }
+
+  /* Collapse desktop multi-column layouts so summary cards/forms aren't squished.
+     Wide data tables are left intact and scroll horizontally inside the page. */
+  [style*="repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+  [style*="repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
+  [style*="1.55fr 0.85fr"],
+  [style*="1.5fr 0.85fr"],
+  [style*="1.65fr 1fr"],
+  [style*="1.4fr 1fr"],
+  [style*="1fr 1.3fr"],
+  [style*="1fr 1.4fr"],
+  [style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* Tasks kanban (the only 5-col grid) → full-width swipe lanes. */
+  [style*="repeat(5, 1fr)"] {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  [style*="repeat(5, 1fr)"] > div {
+    flex: 0 0 84vw;
+    scroll-snap-align: start;
+  }
+
+  /* Responsive tables → stacked label/value cards.
+     Add `rt-head` to the header row, `rt-row` to each data row, and
+     `data-label="Column"` to each cell (omit on an actions cell). */
+  .rt-head { display: none !important; }
+  .rt-row {
+    display: block !important;
+    padding: 14px 16px !important;
+  }
+  .rt-row > * { display: block !important; min-width: 0 !important; padding: 3px 0; text-align: left !important; }
+  /* Action buttons (view / pay / delete) regain spacing in card mode. */
+  .rt-row .btn-icon { margin: 2px 8px 2px 0; }
+  .rt-row > *[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 9.5px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  /* Page toolbars / card headers: wrap their buttons instead of overflowing. */
+  .screen-scroll div:has(> .btn) { flex-wrap: wrap; }
+
+  /* Time page: the live-timer hero stacks and centers everything. */
+  .timer-hero {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-align: center;
+  }
+  .timer-hero > div { width: 100%; align-items: center !important; justify-content: center !important; }
+  .timer-hero > div > div { justify-content: center; }
+
+  /* Time page: the week timesheet grid scrolls horizontally as one unit. */
+  .week-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .week-scroll > div { min-width: 640px; }
+
+  /* Audit log: compact card — actor + action stacked, meta wraps inline. */
+  .audit-row { display: flex !important; flex-wrap: wrap; align-items: center; gap: 5px 10px; }
+  .audit-row > * { display: inline-flex !important; align-items: center; width: auto !important; padding: 0 !important; }
+  .audit-row > *::before { content: none !important; }
+  .audit-row > [data-label="Action"] { flex-basis: 100%; }
+
+  /* Dashboard hero: let the greeting block shrink so its stat line doesn't
+     overflow, and drop the agenda aside to its own full-width line. */
+  .hero-main { min-width: 0 !important; }
+  .hero-aside { align-items: flex-start !important; width: 100%; }
+
+  /* Dashboard "Active projects" card: hide the column labels, keep the project
+     name + progress bar stacked, and inline team · due · status as a meta row. */
+  .proj-card > [data-label]::before { content: none !important; }
+  .proj-card > [data-label="Team"],
+  .proj-card > [data-label="Due"],
+  .proj-card > [data-label="Status"] {
+    display: inline-flex !important;
+    width: auto !important;
+    align-items: center;
+    vertical-align: middle;
+    margin: 6px 14px 0 0;
+  }
+
+  /* Modals: use (almost) the full screen and sit near the top so long forms
+     are reachable above the keyboard, instead of a cramped centered box. */
+  .modal-overlay { padding: 10px !important; align-items: flex-start !important; }
+  .modal-card { width: 100% !important; max-width: 100% !important; max-height: 95vh !important; margin: 0 !important; }
+
+  /* Invoices: a richer compact card instead of a long label/value stack.
+     Layout — [invoice # ........ status] / client / TOTAL / issued · due / actions */
+  .inv-card {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    margin: 10px 12px !important;
+    padding: 14px !important;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-solid);
+  }
+  .inv-card > * { display: inline-flex !important; align-items: center; width: auto !important; padding: 0 !important; min-width: 0; }
+  .inv-card > *::before { content: none !important; }
+  .inv-card > [data-label="Invoice"] { order: 1; margin-right: auto; font-weight: 700; }
+  .inv-card > [data-label="Status"]  { order: 2; }
+  .inv-card > [data-label="Client"]  { order: 3; flex-basis: 100%; }
+  .inv-card > [data-label="Total"],
+  .inv-card > [data-label="Amount"]  { order: 4; flex-basis: 100%; display: block !important; margin: 2px 0; }
+  .inv-card > [data-label="Total"] > div:first-child,
+  .inv-card > [data-label="Amount"] { font-size: 18px; }
+  .inv-card > [data-label="Issued"]  { order: 5; }
+  .inv-card > [data-label="Due"]     { order: 6; }
+  .inv-card > [data-label="Issued"]::before,
+  .inv-card > [data-label="Due"]::before {
+    content: attr(data-label) " ";
+    display: inline !important;
+    color: var(--text-dim);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    font-weight: 600;
+    margin-right: 5px;
+  }
+  .inv-card > div:last-child { order: 7; flex-basis: 100%; margin-top: 8px; }
+}
+
+@media (max-width: 440px) {
+  /* Single-column KPI stacks on very small phones. */
+  [style*="repeat(4, 1fr)"] { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ── Print (invoice PDF) ─────────────────────────────────────────────── */
+@media print {
+  html, body { height: auto; overflow: visible; background: #fff; }
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; inset: 0; margin: 0; box-shadow: none; }
+  .no-print { display: none !important; }
+}

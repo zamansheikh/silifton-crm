@@ -1,0 +1,24 @@
+# Render blueprint for the Silifton API (backend).
+# Deploy the frontend on Vercel separately (see DEPLOY.md).
+services:
+  - type: web
+    name: silifton-api
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: MONGODB_URI
+        sync: false # set in the Render dashboard (secret)
+      - key: MONGODB_DB
+        value: silifton
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        sync: false # set to your Vercel URL, e.g. https://silifton.vercel.app
+      - key: COOKIE_NAME
+        value: silifton_session

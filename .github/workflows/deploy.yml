@@ -1,0 +1,85 @@
+name: Deploy Silifton CRM to VPS
+
+# Auto-deploy on every push to main.
+# Manually trigger via Actions → "Deploy Silifton CRM to VPS" → Run workflow.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - "Design/**"
+      - ".gitignore"
+  workflow_dispatch:
+
+concurrency:
+  group: crm-vps-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: SSH and run deploy.sh
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into VPS and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          # Separate dir from the portfolio so the two apps never clash.
+          APP_DIR: /var/www/silifton-crm
+          REPO_URL: https://github.com/${{ github.repository }}.git
+          BRANCH: main
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          script_stop: true
+          envs: APP_DIR,REPO_URL,BRANCH
+          script: |
+            set -e
+
+            SSH_USER="$USER"
+            echo "▸ Running on $(hostname) as $SSH_USER"
+
+            # --- 1. Auto-install missing prereqs via setup-vps.sh -------
+            # (Usually a no-op on this box — the portfolio already installed
+            #  git/node/npm/pm2. Only bootstraps if something is missing.)
+            MISSING=""
+            for cmd in git node npm pm2; do
+              command -v "$cmd" >/dev/null 2>&1 || MISSING="$MISSING $cmd"
+            done
+
+            if [ -n "$MISSING" ]; then
+              echo "▸ Missing tools:$MISSING — bootstrapping with setup-vps.sh"
+              SETUP_URL="https://raw.githubusercontent.com/${{ github.repository }}/$BRANCH/deploy/setup-vps.sh"
+              if command -v curl >/dev/null 2>&1; then
+                curl -fsSL "$SETUP_URL" -o /tmp/setup-crm.sh
+              elif command -v wget >/dev/null 2>&1; then
+                wget -q "$SETUP_URL" -O /tmp/setup-crm.sh
+              else
+                echo "::error::Neither curl nor wget on the VPS — cannot bootstrap."
+                exit 1
+              fi
+              sudo env \
+                APP_DIR="$APP_DIR" \
+                REPO_URL="$REPO_URL" \
+                BRANCH="$BRANCH" \
+                RUN_USER="$SSH_USER" \
+                bash /tmp/setup-crm.sh
+              rm -f /tmp/setup-crm.sh
+              export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
+              hash -r
+            fi
+
+            # --- 2. Auto-clone if the repo isn't on the VPS yet ---------
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "▸ Repo not yet on this VPS — cloning $REPO_URL → $APP_DIR"
+              sudo mkdir -p "$(dirname "$APP_DIR")"
+              sudo chown -R "$SSH_USER:$SSH_USER" "$(dirname "$APP_DIR")"
+              git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
+            fi
+
+            # --- 3. Pull latest + run the deploy script -----------------
+            cd "$APP_DIR"
+            git fetch --quiet origin "$BRANCH"
+            git reset --hard "origin/$BRANCH" --quiet
+            bash deploy/deploy.sh

@@ -1,0 +1,104 @@
+name: Deploy to VPS
+
+# Auto-deploy on every push to main.
+# Manually trigger via Actions → "Deploy to VPS" → Run workflow.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - "design-system/**"
+      - "logo/**"
+      - ".gitignore"
+  workflow_dispatch:
+
+concurrency:
+  group: vps-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: SSH and run deploy.sh
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into VPS and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          # Hardcoded — change here if you bootstrapped the VPS to a different path.
+          APP_DIR: /var/www/silifton
+          REPO_URL: https://github.com/${{ github.repository }}.git
+          BRANCH: main
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          script_stop: true
+          envs: APP_DIR,REPO_URL,BRANCH
+          script: |
+            set -e
+
+            SSH_USER="$USER"
+            echo "▸ Running on $(hostname) as $SSH_USER"
+
+            # --- 1. Auto-install missing prereqs via setup-vps.sh -------
+            # Required tools: git, node, npm, pm2. If any are missing we
+            # download and run setup-vps.sh (which installs them via apt
+            # + NodeSource + npm -g). Requires passwordless sudo for the
+            # SSH user (the default on most VPS images, or trivially true
+            # if you SSH as root).
+            MISSING=""
+            for cmd in git node npm pm2; do
+              command -v "$cmd" >/dev/null 2>&1 || MISSING="$MISSING $cmd"
+            done
+
+            if [ -n "$MISSING" ]; then
+              echo "▸ Missing tools:$MISSING — bootstrapping with setup-vps.sh"
+
+              # curl is in every modern base image; fall back to wget just in case.
+              SETUP_URL="https://raw.githubusercontent.com/${{ github.repository }}/$BRANCH/deploy/setup-vps.sh"
+              if command -v curl >/dev/null 2>&1; then
+                curl -fsSL "$SETUP_URL" -o /tmp/setup-vps.sh
+              elif command -v wget >/dev/null 2>&1; then
+                wget -q "$SETUP_URL" -O /tmp/setup-vps.sh
+              else
+                echo "::error::Neither curl nor wget is installed on the VPS — cannot bootstrap."
+                exit 1
+              fi
+
+              # Run as root, but preserve the env vars setup-vps.sh respects
+              # so it clones into the same APP_DIR we'll deploy to and chowns
+              # the repo to the SSH user (not root).
+              sudo env \
+                APP_DIR="$APP_DIR" \
+                REPO_URL="$REPO_URL" \
+                BRANCH="$BRANCH" \
+                RUN_USER="$SSH_USER" \
+                bash /tmp/setup-vps.sh
+              rm -f /tmp/setup-vps.sh
+
+              # PATH refresh — pm2 lives in npm's global bin which may not
+              # have been on the non-interactive SSH PATH at session start.
+              export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
+              hash -r
+
+              echo "▸ Bootstrap complete. Versions:"
+              echo "    node $(node -v), npm $(npm -v), pm2 $(pm2 -v), git $(git --version)"
+            fi
+
+            # --- 2. Auto-clone if the repo isn't already on the VPS -----
+            # (setup-vps.sh clones too, but only if it ran; this covers the
+            #  case where everything was already installed but the repo
+            #  hadn't been cloned.)
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "▸ Repo not yet on this VPS — cloning $REPO_URL → $APP_DIR"
+              sudo mkdir -p "$(dirname "$APP_DIR")"
+              sudo chown -R "$SSH_USER:$SSH_USER" "$(dirname "$APP_DIR")"
+              git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
+            fi
+
+            # --- 3. Pull latest + run the deploy script -----------------
+            cd "$APP_DIR"
+            git fetch --quiet origin "$BRANCH"
+            git reset --hard "origin/$BRANCH" --quiet
+            bash deploy/deploy.sh
