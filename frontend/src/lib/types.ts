@@ -10,6 +10,29 @@ export type InvoiceStatus = "Draft" | "Sent" | "Paid" | "Overdue";
 export type Currency = "BDT" | "USD";
 export type ExpenseStatus = "Pending" | "Approved" | "Reimbursed" | "Paid";
 
+export type CredentialCategory =
+  | "VPS" | "Domain" | "Database" | "API" | "Email" | "Cloud" | "Service" | "Other";
+
+export interface CredentialField {
+  label: string;
+  value: string;
+  secret?: boolean;
+}
+
+export interface Credential {
+  id: string;
+  title: string;
+  category: CredentialCategory;
+  url?: string;
+  notes?: string;
+  fields: CredentialField[];
+  tags: string[];
+  sharedWith: string[];
+  createdBy: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface AuthUser {
   id: string;
   name: string;

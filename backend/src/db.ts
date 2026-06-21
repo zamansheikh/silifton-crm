@@ -19,6 +19,7 @@ import type {
   FixedAsset,
   ReconMark,
   ShareLink,
+  Credential,
 } from "./types.js";
 
 let client: MongoClient | null = null;
@@ -68,6 +69,7 @@ export const collections = {
   assets: () => getDb().collection<FixedAsset>("assets"),
   recon: () => getDb().collection<ReconMark>("recon"),
   shares: () => getDb().collection<ShareLink>("shares"),
+  credentials: () => getDb().collection<Credential>("credentials"),
 };
 
 export type Collections = typeof collections;
@@ -96,6 +98,8 @@ export async function ensureIndexes(): Promise<void> {
     collections.assets().createIndex({ id: 1 }, { unique: true }),
     collections.recon().createIndex({ account: 1, entryId: 1 }, { unique: true }),
     collections.shares().createIndex({ token: 1 }, { unique: true }),
+    collections.credentials().createIndex({ id: 1 }, { unique: true }),
+    collections.credentials().createIndex({ sharedWith: 1 }),
   ]);
 }
 

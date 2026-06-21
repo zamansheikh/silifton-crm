@@ -27,6 +27,7 @@ function useCrumbs(): string[] {
   if (pathname.startsWith("/accounting")) return ["Operate", "Accounting"];
   if (pathname.startsWith("/assets")) return ["Operate", "Fixed Assets"];
   if (pathname.startsWith("/reports")) return ["Operate", "Reports"];
+  if (pathname.startsWith("/credentials")) return ["System", "Credentials"];
   if (pathname.startsWith("/audit")) return ["System", "Audit log"];
   if (pathname.startsWith("/settings")) return ["System", "Settings"];
   return ["Workspace"];
@@ -36,13 +37,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const crumbs = useCrumbs();
   const router = useRouter();
   const pathname = usePathname();
-  const { taskOpenId, closeTask, perms, role } = useApp();
+  const { taskOpenId, closeTask, perms, role, credentialsAccess } = useApp();
   const [navOpen, setNavOpen] = useState(false);
 
   // Guard: if the current role can't see this section, bounce to the dashboard.
   // Keeps hidden pages truly inaccessible, not just hidden from the sidebar.
   const key = routeKey(pathname);
-  const blocked = key ? !navAccess(perms, role)[key] : false;
+  // Credentials isn't a role-based nav key — it's gated by founder-or-shared.
+  const credBlocked = pathname.startsWith("/credentials") && !(role === "founder" || credentialsAccess);
+  const blocked = (key ? !navAccess(perms, role)[key] : false) || credBlocked;
   useEffect(() => {
     if (blocked) router.replace("/dashboard");
   }, [blocked, router]);

@@ -10,6 +10,10 @@ export const env = {
   mongoUri: required("MONGODB_URI"),
   mongoDb: process.env.MONGODB_DB || "silifton",
   jwtSecret: required("JWT_SECRET"),
+  // Key used to encrypt the credentials vault at rest (AES-256-GCM). Falls back
+  // to JWT_SECRET so it works out of the box; set a dedicated CREDENTIALS_KEY in
+  // production. Rotating this key makes existing encrypted secrets unreadable.
+  credentialsKey: process.env.CREDENTIALS_KEY || required("JWT_SECRET"),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
   port: Number(process.env.PORT || 7011),
   nodeEnv: process.env.NODE_ENV || "development",

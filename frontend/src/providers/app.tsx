@@ -81,6 +81,7 @@ interface AppContextValue {
   taskOpenId: string | null;
   openTask: (id: string) => void;
   closeTask: () => void;
+  credentialsAccess: boolean;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -107,6 +108,7 @@ export function AppProvider({
   const [projects, setProjects] = useState<Project[]>([]);
   const [version, setVersion] = useState(0);
   const [taskOpenId, setTaskOpenId] = useState<string | null>(null);
+  const [credentialsAccess, setCredentialsAccess] = useState(user.appRole === "founder");
 
   // Hydrate tweaks from localStorage once.
   useEffect(() => {
@@ -158,6 +160,15 @@ export function AppProvider({
     reloadCore().catch(() => {});
   }, [reloadCore, version]);
 
+  // Whether the user may see the Credentials vault (founder, or has entries
+  // shared with them). Drives the sidebar item + route guard.
+  useEffect(() => {
+    api.credentials
+      .access()
+      .then((r) => setCredentialsAccess(r.canAccess))
+      .catch(() => {});
+  }, [version]);
+
   // Close drawer on Esc.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -192,8 +203,9 @@ export function AppProvider({
       taskOpenId,
       openTask: setTaskOpenId,
       closeTask: () => setTaskOpenId(null),
+      credentialsAccess,
     };
-  }, [user, role, tweak, setTweak, team, clients, projects, reloadCore, version, bump, taskOpenId]);
+  }, [user, role, tweak, setTweak, team, clients, projects, reloadCore, version, bump, taskOpenId, credentialsAccess]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

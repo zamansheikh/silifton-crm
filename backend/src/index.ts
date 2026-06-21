@@ -19,6 +19,7 @@ import auditRoutes from "./routes/audit.js";
 import publicRoutes from "./routes/public.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import activityRoutes from "./routes/activity.js";
+import credentialRoutes from "./routes/credentials.js";
 import { auditMiddleware } from "./lib/audit.js";
 
 async function main() {
@@ -57,6 +58,7 @@ async function main() {
   app.use("/api/public", publicRoutes);
   app.use("/api/dashboard", dashboardRoutes);
   app.use("/api/activity", activityRoutes);
+  app.use("/api/credentials", credentialRoutes);
 
   app.use((_req, res) => {
     res.status(404).json({ error: "Route not found" });

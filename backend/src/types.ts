@@ -298,3 +298,37 @@ export interface AuthUser {
   bg: string;
   title: string;
 }
+
+// ── Credentials vault ───────────────────────────────────────────────
+// A secure store for dev/infra secrets (VPS, domains, databases, API keys…).
+// Owned by the founder; shared per-entry with specific members. Field values
+// and notes are encrypted at rest (see lib/crypto.ts).
+export type CredentialCategory =
+  | "VPS"
+  | "Domain"
+  | "Database"
+  | "API"
+  | "Email"
+  | "Cloud"
+  | "Service"
+  | "Other";
+
+export interface CredentialField {
+  label: string; // "Host", "Username", "Password", "Port", "Root password"…
+  value: string; // encrypted at rest; decrypted in API responses to authorized users
+  secret: boolean; // mask in the UI by default
+}
+
+export interface Credential {
+  id: string; // "cred-…"
+  title: string;
+  category: CredentialCategory;
+  url?: string;
+  notes?: string; // encrypted at rest
+  fields: CredentialField[];
+  tags: string[];
+  sharedWith: string[]; // member ids granted access (besides the founder owner)
+  createdBy: string; // member id
+  createdAt: Date;
+  updatedAt: Date;
+}

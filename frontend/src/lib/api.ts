@@ -26,6 +26,7 @@ import type {
   BankReconciliation,
   AuditPack,
   ShareLink,
+  Credential,
 } from "./types";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:7011";
@@ -268,4 +269,14 @@ export const api = {
   },
   activity: (params?: { project?: string }) =>
     get<ActivityItem[]>(`/activity${params?.project ? `?project=${params.project}` : ""}`),
+  credentials: {
+    access: () => get<{ canAccess: boolean }>("/credentials/access"),
+    list: () => get<Credential[]>("/credentials"),
+    create: (body: Partial<Credential> & { title: string }) => post<Credential>("/credentials", body),
+    update: (id: string, body: Partial<Credential>) => patch<Credential>(`/credentials/${id}`, body),
+    remove: (id: string) => del<{ ok: true }>(`/credentials/${id}`),
+    export: () => get<Credential[]>("/credentials/export"),
+    import: (items: Partial<Credential>[], mode: "merge" | "replace") =>
+      post<{ ok: true; count: number }>("/credentials/import", { items, mode }),
+  },
 };

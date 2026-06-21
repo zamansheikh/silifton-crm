@@ -115,7 +115,7 @@ const NavGroup = ({ label, collapsed, children }: { label: string; collapsed?: b
 );
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void } = {}) {
-  const { tweak, setTweak, user, team, projects, perms, role } = useApp();
+  const { tweak, setTweak, user, team, projects, perms, role, credentialsAccess } = useApp();
   const pathname = usePathname();
   const isMobile = useIsMobile();
   // The collapse/expand rail is a desktop feature; the mobile drawer is always
@@ -136,6 +136,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void } = {}) {
     audit: access.audit,
   };
   const operate = show.invoices || show.expenses || show.accounting || show.assets || show.reports;
+  const showCredentials = role === "founder" || credentialsAccess;
   const is = (p: string) => pathname === p || (p !== "/dashboard" && pathname.startsWith(p));
   const taskCount = projects.reduce((s, p) => s + p.tasksOpen, 0);
 
@@ -263,6 +264,9 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void } = {}) {
         )}
 
         <NavGroup collapsed={collapsed} label="System">
+          {showCredentials && (
+            <NavItem collapsed={collapsed} active={is("/credentials")} href="/credentials" label="Credentials" icon={<Icon d={I.key} />} />
+          )}
           {show.audit && (
             <NavItem collapsed={collapsed} active={is("/audit")} href="/audit" label="Audit log" icon={<Icon d={I.lock} />} />
           )}
