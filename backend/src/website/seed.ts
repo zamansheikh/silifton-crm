@@ -11,70 +11,167 @@ export const SEED_SERVICES = [
   { num: "06", title: "Staff Augmentation", desc: "Senior engineers and designers integrated into your roadmap. No middlemen, no warm bodies.", icon: "users", tags: ["Senior+", "Dedicated"] },
 ];
 
-// PLACEHOLDER content — invented for the design demo. Cover images
-// are royalty-free Unsplash photos. Replace via /admin or edit here.
+// Real portfolio (Silifton's own products and open source), covers hosted on Nimbus.
 export const SEED_PORTFOLIO = [
   {
-    id: "case-01", client: "Helix Bank", industry: "Fintech",
-    title: "Replatformed core onto event-driven Kotlin services",
-    year: 2025, span: 8, status: "Live", thumb: "H", color: "#3DDC9A",
-    metric: "$1.2B daily volume",
-    image: "/portfolio/case-01-fintech.jpg",
-    summary: "A nine-month replatform of a 12-year-old monolith onto event-driven Kotlin services, completed with zero customer-visible downtime.",
-    body:
-      "Helix Bank's core banking system processed $1.2B in daily settlement traffic on a Java monolith first shipped in 2013. Every release required a six-hour maintenance window, and new market expansions were being blocked on the platform's inability to handle multi-currency reconciliation in real time.\n\n" +
-      "We embedded a squad of six — two staff engineers, an SRE, a domain modeller, and two product designers — alongside Helix's existing platform team. The first month was discovery: shadowing operations, mapping every event a transaction touched, and stress-testing the assumptions baked into the original schema.\n\n" +
-      "From month two we built outward from the most-painful boundary (the settlement engine) into event-driven Kotlin services running on Kubernetes with Kafka as the spine. Each new service launched behind a feature flag, with the monolith kept as the source of truth until parity was proven by a 30-day shadow-run.\n\n" +
-      "Outcome: P99 latency on settlement fell 68%, the team now ships to production five times a week, and Helix expanded into three new currencies in the quarter following cutover — the first market expansion in four years that didn't require a platform freeze.",
+    id: "classkhata",
+    client: "ClassKhata",
+    industry: "EdTech",
+    title: "Attendance, assessment and report cards for Bangladesh's primary schools",
+    year: 2026,
+    span: 8,
+    status: "Live",
+    thumb: "C",
+    color: "#1B7A4A",
+    metric: "Live · classkhata.com",
+    image: "https://files.zamansheikh.com/portfolio-classkhata-jrbgzloykn.jpg",
+    imagePublicId: "nimbus:6ab2c4bfff497db7902df314",
+    summary: "A Bangla-first web app for government primary schools: daily attendance, the 2026 assessment register, one-click report cards and QR-verifiable certificates, running in any browser on a low-end phone.",
+    body: "ClassKhata (ক্লাসখাতা) is Silifton's own product for head teachers and teachers in Bangladesh's primary schools. It replaces the paper attendance register, the assessment register and the hand-written report card with a single web app that works on the phone the teacher already has. Everything is in Bangla, including the numerals, and nothing needs to be installed.\n\nThe assessment module follows the national Primary Level Assessment Guideline 2026 exactly: continuous and summative marks per subject and term, automatic totals, averages and grades, the A/B/C quality marks for participation, discipline and behaviour, and a readiness check that tells the class teacher what is still missing before a report card can be produced. Report cards print to the guideline's layout, one student or the whole section at once.\n\nSchools also issue transfer certificates, testimonials, appreciation letters and certificates with the school seal, a memo number and a QR code. Anyone can scan the code at classkhata.com/verify to confirm the school, the student and the issue date. Home-visit forms and the 0 to 14+ child survey sheet are built in as well.\n\nUnder the hood it is a monorepo: a framework-free assessment rules engine covered by unit tests, a NestJS and PostgreSQL API, and a Next.js 16 web app, deployed with Docker behind nginx. Schools sign up at classkhata.com/apply, get a 30-day trial with every feature, and pay by bKash. The design documents plan for national scale: 150,000 schools, 20 million students and billions of attendance records.",
   },
   {
-    id: "case-02", client: "Verde Health", industry: "Healthtech",
-    title: "HIPAA-grade telemedicine for 14M patients",
-    year: 2025, span: 4, status: "Live", thumb: "V", color: "#4F7BE6",
-    metric: "14M patients",
-    image: "/portfolio/case-02-healthtech.jpg",
-    summary: "End-to-end telemedicine platform handling 14M patients across 200 clinics, with HIPAA-grade encryption and a sub-second clinician handoff.",
-    body:
-      "Verde Health was running three different patient portals across their acquired clinics — none of them HIPAA-compliant in the way the 2024 audit cycle required. The remediation work alone would have taken eighteen months. They asked us to ship a replacement instead.\n\n" +
-      "We delivered an end-to-end telemedicine platform in seven months: patient onboarding, video consultation, clinician handoff, prescription writing, and post-visit charting — all flowing through a single record. Encryption is end-to-end at the application layer (so even our infrastructure operators can't read consultation notes), and every action against a patient record is signed and logged.\n\n" +
-      "The clinician UI was designed in close partnership with the medical staff: every screen tested against the rule that a senior doctor under load should never need more than two clicks to reach the next patient.\n\n" +
-      "At rollout 14M patient records migrated from the legacy portals over a single weekend. Compliance signed off without conditions; clinician NPS on the new tool sits at +71.",
+    id: "plotcalc",
+    client: "PlotCalc",
+    industry: "Mobile",
+    title: "A land-area calculator for surveyors, farmers and buyers",
+    year: 2025,
+    span: 4,
+    status: "Live",
+    thumb: "P",
+    color: "#5B3DF5",
+    metric: "v2.1 · Android",
+    image: "https://files.zamansheikh.com/portfolio-plotcalc-y0a7f9h3m6.jpg",
+    imagePublicId: "nimbus:6ab2c4c0ff497db7902df315",
+    summary: "Draw or enter a plot as a rectangle, triangle, four-sided polygon or circle and get its area instantly in metres or feet, in five languages, fully offline.",
+    body: "PlotCalc is a Flutter app for measuring land. Real-estate buyers, farmers, builders and surveyors in Bangladesh routinely deal with irregular plots and mixed units, and most calculator apps get the maths wrong for anything that is not a rectangle.\n\nThe app handles rectangles, triangles, arbitrary quadrilaterals and circles with survey-grade formulas, switches between metres and feet everywhere, and keeps a history of every measurement with its inputs so a figure can be checked later. Custom polygons are drawn on screen and edited by dragging their corners.\n\nIt is localised in English, Bangla, Spanish, French and German, stores everything on the device with no account or network, and ships through the Play Store with a public landing page at zamansheikh.github.io/plotcalc. The project has passed 130 commits and is at version 2.1.",
   },
   {
-    id: "case-03", client: "Atlas Logistics", industry: "Supply chain",
-    title: "Real-time fleet observability across 24 countries",
-    year: 2024, span: 4, status: "Live", thumb: "A", color: "#F5A524",
-    metric: "24 countries",
-    image: "/portfolio/case-03-logistics.jpg",
-    summary: "Real-time observability over Atlas's 18,000-vehicle fleet across 24 countries, with sub-second sensor lag and ML anomaly detection.",
-    body:
-      "Atlas operates 18,000 commercial vehicles across 24 countries, but the legacy GPS provider had a 4-minute median latency between sensor reading and dashboard pixel. For perishable cargo and just-in-time deliveries that's a half-day's worth of preventable spoilage every week.\n\n" +
-      "We built a streaming pipeline on top of MQTT and Apache Flink that brought median latency to 800ms and tail latency under five seconds — across every region with reliable cellular coverage. The dashboard was rewritten as a real-time map with vehicle, route, and cargo telemetry layered on demand.\n\n" +
-      "An ML anomaly detector flags trucks deviating from their expected route, temperature envelope, or stop schedule before a dispatcher would manually catch it. Atlas reports the system pays for itself in claims-avoidance every fortnight.",
+    id: "nu-result",
+    client: "NU Result",
+    industry: "EdTech",
+    title: "CGPA calculator and transcript generator for National University students",
+    year: 2024,
+    span: 4,
+    status: "Live",
+    thumb: "N",
+    color: "#0FA3B1",
+    metric: "1K+ Play Store installs",
+    image: "https://files.zamansheikh.com/portfolio-nu-result-88cvmtlmbp.jpg",
+    imagePublicId: "nimbus:6ab2c4c2ff497db7902df316",
+    summary: "Year-by-year SGPA and CGPA with the university's grading scale, plus a professionally formatted PDF transcript generated entirely on the phone.",
+    body: "National University of Bangladesh has over two million students and no simple way for them to track their own results. NU Result is a Flutter app that lets a student enter each year's courses, credits and grades and see their SGPA and cumulative CGPA update as they type, using the university's A+ to F scale.\n\nThe transcript generator turns that data into a clean, university-style academic transcript as a PDF, produced on the device with no server involved. Analytics screens chart SGPA by year, credit distribution and best and worst terms so a student can see the trend, not just the number.\n\nAll data stays local. The app is published on Google Play under com.decodersfamily.nu_result and has passed a thousand installs. A companion service scrapes the official results portal, solving its captcha automatically, so results can be fetched into structured JSON.",
   },
   {
-    id: "case-04", client: "Northwind Energy", industry: "Energy",
-    title: "ML pipeline cutting grid forecasting error by 38%",
-    year: 2024, span: 4, status: "Live", thumb: "N", color: "#C792EA",
-    metric: "−38% error",
-    image: "/portfolio/case-04-energy.jpg",
-    summary: "Production ML pipeline that cut Northwind's 24-hour wind and solar generation forecast error by 38%, shifting the cost-of-service math.",
-    body:
-      "Northwind manages a 4.2 GW renewable portfolio across the North Sea and central Europe. Their existing 24-hour generation forecast — used to bid into day-ahead energy markets — sat at 11% mean absolute error. Every percentage point of that error cost real money in over- and under-procured backup capacity.\n\n" +
-      "We built an ensemble forecasting pipeline combining numerical weather models with three years of asset-level telemetry. The pipeline runs hourly, retrains weekly, and now sits at 6.8% MAE — a 38% improvement.\n\n" +
-      "Just as important as the model itself: a small evaluation harness Northwind's quant team uses to A/B test new features before they touch the production bid. The team has shipped four model improvements without our help since the engagement closed.",
+    id: "campussaga",
+    client: "Campus Saga",
+    industry: "EdTech",
+    title: "A community app where students raise campus issues and admins resolve them",
+    year: 2023,
+    span: 4,
+    status: "Live",
+    thumb: "S",
+    color: "#2F5BFF",
+    metric: "Open source · Flutter",
+    image: "https://files.zamansheikh.com/portfolio-campussaga-xnrwl0lmd0.jpg",
+    imagePublicId: "nimbus:6ab2c4c3ff497db7902df317",
+    summary: "Students post problems from their campus, discuss and vote, and university admins respond and rate solutions. Rankings and promotions run on top of the same feed.",
+    body: "Campus Saga started as a way to make university life in Bangladesh more accountable. A student posts an issue on campus, a broken lab, a scheduling clash, a harassment complaint, and other students discuss it in the open. Verified university admins respond, mark solutions and are rated on how they handled it, which feeds an institutional ranking.\n\nThe app is built in Flutter with Clean Architecture and BLoC, with profiles and campus analytics, a promotions feature for campus events, and an admin console for moderation. It is released publicly on GitHub with a changelog and versioned builds, and it is the most-starred repository in the studio's open-source work.",
   },
   {
-    id: "case-05", client: "Loom Studio", industry: "Media",
-    title: "Editorial CMS used by 400+ newsrooms",
-    year: 2024, span: 4, status: "Live", thumb: "L", color: "#3DDC9A",
-    metric: "400+ rooms",
-    image: "/portfolio/case-05-media.jpg",
-    summary: "Editorial CMS rebuilt from scratch — now powering 400+ newsrooms with collaborative editing, AI-assisted research, and one-click syndication.",
-    body:
-      "Loom's CMS had grown organically over a decade and was groaning under the weight of 400+ newsrooms hosting daily editorial workflows on it. Every desk had a different workaround for collaborative editing; AI-assisted research lived in a separate tool no one trusted.\n\n" +
-      "We rebuilt the editor on a CRDT foundation (so two journalists can type into the same paragraph without losing edits), integrated a research sidecar that pulls source corroboration in-context, and shipped a syndication API that lets a publisher push the same story to 12 outlets with one click.\n\n" +
-      "Rollout was staged room-by-room over four months. Adoption hit 92% by week six; the average story now takes 23% less time from pitch to publish.",
+    id: "lifeque",
+    client: "LifeQue",
+    industry: "Mobile",
+    title: "Prayer times, a focus timer and life reminders in one companion app",
+    year: 2025,
+    span: 4,
+    status: "Live",
+    thumb: "L",
+    color: "#1F8A70",
+    metric: "v2.2 · 340+ commits",
+    image: "https://files.zamansheikh.com/portfolio-lifeque-vmuvva8l3s.jpg",
+    imagePublicId: "nimbus:6ab2c4c5ff497db7902df318",
+    summary: "Accurate prayer times and Qibla direction, smart prayer alarms, a Pomodoro study timer, tasks, expenses and birthday and medication reminders, with an in-app update system.",
+    body: "LifeQue is a Flutter app that combines the Islamic daily routine with the productivity tools people already juggle across three or four apps. Prayer times are computed from GPS with a choice of calculation methods, the Qibla compass rotates live, and prayer alarms can fire either at a fixed time or a set number of minutes before a prayer window closes.\n\nOn the productivity side there is a full Pomodoro timer with cycle tracking and audio cues, a timeline-based task manager, expense tracking, and reminders for birthdays and medication. Notifications are system-level and persistent where it matters.\n\nThe codebase follows Clean Architecture with BLoC, GoRouter and dependency injection, has a test suite and continuous integration, and ships releases with in-app update prompts and release notes. It is the most actively developed app in the studio, past version 2.2 and more than 340 commits.",
+  },
+  {
+    id: "bangla-pdf",
+    client: "Open source",
+    industry: "Developer tools",
+    title: "Correctly shaped Bangla text in PDFs, for Dart and for Node",
+    year: 2025,
+    span: 4,
+    status: "Live",
+    thumb: "B",
+    color: "#E23D28",
+    metric: "On pub.dev and npm",
+    image: "https://files.zamansheikh.com/portfolio-bangla-pdf-skldpesttx.jpg",
+    imagePublicId: "nimbus:6ab2c4c6ff497db7902df319",
+    summary: "Two libraries, bangla_pdf for Flutter and bangla-pdf for TypeScript, that render conjuncts, vowel signs and reph correctly and keep the text copyable as real Unicode.",
+    body: "Bengali script is hard to typeset: vowel signs reorder around consonants, conjuncts fuse, and the reph hooks over the following letter. Most PDF libraries get this wrong, producing broken conjuncts and text that cannot be searched or copied. This is a real problem for every invoice, notice and report generated in Bangladesh.\n\nbangla_pdf is a drop-in replacement for the standard Dart pdf package that shapes text with HarfBuzz and embeds the fonts so the result renders correctly everywhere and the text extracts as proper Unicode. It is published on pub.dev, has a full changelog and test suite, and is at version 1.9.\n\nbangla-pdf brings the same approach to Node and the browser on top of pdf-lib, shipped as ESM and CommonJS with a test suite that includes pixel diffs, round-trip extraction and Word export. Both libraries are open source and used in the studio's own products, including ClassKhata's report cards and certificates.",
+  },
+  {
+    id: "svga-studio",
+    client: "SVGA Studio",
+    industry: "Media",
+    title: "Edit and compress SVGA animations entirely in the browser",
+    year: 2026,
+    span: 4,
+    status: "Live",
+    thumb: "V",
+    color: "#7C5CFF",
+    metric: "100% client-side",
+    image: "https://files.zamansheikh.com/portfolio-svga-studio-bvmwjtcin7.jpg",
+    imagePublicId: "nimbus:6ab2c4c8ff497db7902df31a",
+    summary: "Preview, shrink, watermark and re-letter the text baked into live-streaming gift animations, with nothing ever uploaded to a server.",
+    body: "SVGA is the animation format behind gift effects and badges in live-streaming apps. Designers hand over files that are far too large for mobile, and changing a level number painted into a badge normally means going back to the original artwork.\n\nSVGA Studio parses the SVGA 2.x protobuf in the browser, lets you drop in a whole set of files, and gives side-by-side original versus compressed playback with quality, scale and output-format controls. It can replace the text drawn into a badge in its original lettering, remove a bitmap and every sprite that uses it, merge duplicate bitmaps and strip exporter metadata.\n\nDecoding, re-encoding and gzip all happen on the device, so nothing leaves the browser. It is built with Next.js 15 and React 19, deploys to Vercel in one click, and is live at svga-studio.vercel.app. It grew out of work on the studio's live-streaming client projects.",
+  },
+  {
+    id: "ztools",
+    client: "ztools",
+    industry: "Developer tools",
+    title: "An everyday developer toolbox with synced snippets and a secrets vault",
+    year: 2026,
+    span: 4,
+    status: "Live",
+    thumb: "Z",
+    color: "#2563EB",
+    metric: "25+ tools · self-hosted",
+    image: "https://files.zamansheikh.com/portfolio-ztools-yvounbvupn.jpg",
+    imagePublicId: "nimbus:6ab2c4caff497db7902df31b",
+    summary: "Formatters, encoders, generators and converters in one fast page, plus a code-based public clipboard between laptop and phone and a private per-account vault.",
+    body: "ztools collects the small utilities a developer reaches for all day, a JSON formatter, JWT decoder, hash and UUID generators, base and case converters, regex tester and more than twenty others, into a single fast, keyboard-friendly page with no tracking.\n\nTwo features make it more than a toolbox. The public clipboard moves text between devices with a short code that can expire or burn after one read. Signed-in users get synced snippets and a private secrets vault with a super-admin panel for the instance.\n\nIt runs on Next.js 16 with MongoDB, is deployed with Docker on the studio's own server and is live at ztools.zamansheikh.com.",
+  },
+  {
+    id: "watchdog",
+    client: "Silifton internal",
+    industry: "Internal tools",
+    title: "Agentless uptime monitoring and control for every client server",
+    year: 2026,
+    span: 4,
+    status: "Live",
+    thumb: "W",
+    color: "#14B8A6",
+    metric: "Multi-VPS · self-hosted",
+    image: "https://files.zamansheikh.com/portfolio-watchdog-yxhgfxddkv.jpg",
+    imagePublicId: "nimbus:6ab2c4ccff497db7902df31c",
+    summary: "One dashboard that checks every project on every server over SSH, restarts what it can, and emails when something goes down or recovers.",
+    body: "The studio runs software on many servers it does not own, across several hosting providers, with PM2, Docker and systemd side by side. Watchdog is the self-hosted panel that keeps an eye on all of it without installing an agent anywhere.\n\nIt connects to each server over SSH on a schedule and runs the check that fits the project: a PM2 process list, a Docker container's health, a systemd unit's state, a tmux session, or a plain HTTP request with an expected status. Projects are grouped under their servers, checks run with a concurrency cap, and a one-click restart or optional auto-restart runs the right command over the same connection.\n\nCredentials are encrypted at rest, alerts fire only on transitions, and a generated one-line script allow-lists the monitor's IP on a new server so fail2ban does not lock it out. It is built with Next.js, Prisma and SQLite and deploys with Docker Compose in minutes.",
+  },
+  {
+    id: "git-vanish",
+    client: "Open source",
+    industry: "Developer tools",
+    title: "Erase leaked secrets and files from git history from a terminal UI",
+    year: 2026,
+    span: 4,
+    status: "Live",
+    thumb: "G",
+    color: "#16A34A",
+    metric: "Published on npm",
+    image: "https://files.zamansheikh.com/portfolio-git-vanish-880nuhrlvm.jpg",
+    imagePublicId: "nimbus:6ab2c4ceff497db7902df31d",
+    summary: "An interactive CLI that removes a file from every commit, redacts a leaked secret across history, or reassigns a contributor, with a dry run and confirmations that default to cancel.",
+    body: "Committing a .env file or an API key happens to every team eventually, and the standard fix involves a long filter-branch incantation that is easy to get wrong. git-vanish wraps that workflow in a terminal UI: browse the tree with the mouse or vi keys, pick the files, see how many commits are affected, and confirm.\n\nIt can purge files from the entire history, redact a specific string across all commits, or move a contributor's commits to a different identity. Every destructive step has a dry run and a confirmation that defaults to cancel, and local files are never touched, only the history.\n\nIt is published on npm as git-vanish, at version 1.6, and runs with a single npx command.",
   },
 ];
 
@@ -87,74 +184,91 @@ export const SEED_TEAM = [
   { name: "Junaid Ali", role: "Director of Operations", initials: "JA", focus: "Delivery, PMO" },
 ];
 
-// PLACEHOLDER bodies — written as design demo. Replace via /admin or here.
+// Real posts; covers hosted on Nimbus.
 export const SEED_POSTS = [
   {
-    id: "p-01", title: "What we learned shipping 14 RAG systems to production",
-    author: "Sadia Karim", date: "May 12, 2026", read: "9 min",
-    category: "Engineering", status: "Published", views: 12480,
-    excerpt: "Fourteen production RAG systems later, the bugs that surprised us most weren't in the retrieval — they were in the eval layer we kept telling ourselves we'd fix later.",
-    body:
-      "We have shipped 14 retrieval-augmented generation systems to production over the last two years — different domains, different scales, different models. The patterns we keep tripping over have very little to do with retrieval quality.\n\n" +
-      "The eval problem. Every team starts with 'we'll add evals later'. Every team eventually has a Slack thread three weeks before launch arguing about whether a hallucination is a regression. We now refuse to ship a RAG system without a labelled eval set on day one. It's the cheapest insurance we know.\n\n" +
-      "Context-window economics. The reflex 'just put more in context' has cost more than one client real money. Above 8k tokens, recall starts to degrade on most models — and your bill grows linearly. A reranker is almost always cheaper than a bigger window.\n\n" +
-      "The retrieval bug that wasn't. Three of our last five 'retrieval bugs' turned out to be chunking bugs in disguise. If your documents have semantic boundaries (sections, FAQ items, function definitions), align your chunks to them. Sliding-window chunking is fine for prose, terrible for structured text.",
+    id: "nextjs-16-production-checklist",
+    title: "The Next.js production checklist we run before every launch",
+    author: "Zaman Sheikh",
+    date: "Sep 18, 2026",
+    read: "7 min",
+    category: "Engineering",
+    status: "Published",
+    views: 0,
+    excerpt: "Twelve checks we run on every Next.js app before it goes live. None of them are clever, and every one of them has saved a launch.",
+    body: "We ship a lot of Next.js. Marketing sites, admin panels, customer portals, the odd mobile web app. Over time the pre-launch review turned into a fixed checklist, and the checklist is the reason our launches are boring. Here it is, in the order we run it.\n\n1. Build in production mode, not dev. The dev server hides a whole class of problems: server and client component boundaries, hydration mismatches, environment variables that only exist on your laptop. We run the production build on a clean clone with only the variables the server will have.\n\n2. Read the route table. The build prints every route with a symbol: static, dynamic, or edge. If a page you expected to be static shows up as dynamic, something on it is reading cookies, headers or search params. Fix it now, before it costs you cache hits for a year.\n\n3. Bake public variables on purpose. Anything prefixed NEXT_PUBLIC_ is compiled into the bundle. Changing it later means a rebuild, not a restart. We write that down in the deploy script so nobody spends an afternoon restarting a process that will never change.\n\n4. Put the app behind a real reverse proxy. nginx or Caddy terminate TLS, forward the client IP and host, and shield the Node process. Trust the proxy in the app so rate limits and analytics see real addresses instead of 127.0.0.1.\n\n5. Bind to localhost. The Node process should listen on 127.0.0.1 only. The proxy is the only thing that talks to it. This is the single cheapest security control on a shared server.\n\n6. Check the metadata. Title, description, canonical URL, Open Graph image, robots and sitemap. We open the site in a link-preview tool and look at what a shared link will actually render.\n\n7. Test the forms end to end, from the public domain. Not from localhost. CORS, cookies marked Secure, and SameSite rules all behave differently once a real hostname is involved.\n\n8. Make the fallback state honest. If the site pulls content from an API, decide what it shows when the API is down. We ship a bundled fallback for marketing pages so a backend incident never takes the front door with it.\n\n9. Turn off telemetry and turn on logs. Disable the framework's telemetry, then make sure the process manager captures stdout and stderr to files that rotate.\n\n10. Set memory limits in the process manager. A Next.js server that leaks will eventually take the box with it. A restart at a sane memory ceiling is better than an outage at 3 a.m.\n\n11. Hard refresh after deploy, then check in a private window. Cached assets and stale service workers hide regressions from the person who just deployed.\n\n12. Write the rollback command before you need it. The commit hash of the last good build and the one-line command to return to it belong in the deploy notes, not in someone's memory.\n\nThat is the whole list. It fits on one screen, takes under an hour, and it has caught something on almost every launch we have done this year.",
+    image: "https://files.zamansheikh.com/nextjs-16-production-checklist-i-rlso8ii4.jpg",
+    imagePublicId: "nimbus:6ab2c0b6ff497db7902df2ea",
   },
   {
-    id: "p-02", title: "Designing for trust: how we approached HIPAA-grade UX",
-    author: "Aria Mahmud", date: "May 04, 2026", read: "6 min",
-    category: "Design", status: "Published", views: 8210,
-    excerpt: "HIPAA compliance is usually treated as a checklist. We treated it as a design constraint and it changed every screen.",
-    body:
-      "When we started on the Verde Health telemedicine platform, every conversation about HIPAA was about audit logs and at-rest encryption. Those matter, but they aren't what patients see. What patients see is the moment a clinician asks them to share something personal — and the platform has to either earn or break trust in that moment.\n\n" +
-      "Three rules we wrote down early and kept referring to:\n\n" +
-      "1. Show what's being recorded, while it's being recorded. A small persistent indicator wins over a one-time consent screen every time.\n\n" +
-      "2. Make 'delete' really delete — and say so. The legal team flinched at the first draft. We pushed back. The button now reads 'Delete this visit permanently' and it does what it says.\n\n" +
-      "3. Never bury who can see what. On every patient record there's a single line listing exactly which roles can read the page. It's not a popup, it's not a tooltip. It's right there at the top.\n\n" +
-      "None of these are 'compliance' in the audit sense. All of them moved clinician NPS up.",
+    id: "monitoring-projects-across-many-vps",
+    title: "One dashboard for every client server: how we monitor projects across many VPSes",
+    author: "Zaman Sheikh",
+    date: "Sep 9, 2026",
+    read: "6 min",
+    category: "Operations",
+    status: "Published",
+    views: 0,
+    excerpt: "Small studios end up with software on dozens of machines they do not own. Here is the lightweight, agentless setup we use to know when any of it goes down.",
+    body: "A studio like ours does not run one big platform. We run many small ones, on servers that belong to clients, on three or four hosting providers, with PM2 here, Docker there, and the occasional systemd unit. Nobody has time to log into each box every morning.\n\nWhat we wanted was simple: a single screen that says which projects are up, when each was last checked, and an email the moment one stops answering. What we did not want was another agent to install and update on every machine.\n\nThe setup we settled on is agentless. A small watchdog service connects to each server over SSH on a schedule, runs the check that fits the project, and records the result. For a PM2 app that is a process listing. For Docker it is the container's health state. For a systemd service it is whether the unit is active. For a plain web app it is an HTTP request with an expected status code.\n\nTwo details made it actually useful.\n\nFirst, the checks are per project, not per server. A server can be fine while one of six apps on it is down. Grouping projects under servers keeps the view honest.\n\nSecond, the watchdog can act, not just watch. A restart button in the panel runs the right restart command over the same SSH session, and auto-restart can be turned on per project for the ones that recover cleanly. Most 2 a.m. incidents are a crashed process that just needed a kick.\n\nA few lessons from running it for a while:\n\nWhitelist the watchdog's IP on every monitored server. Repeated SSH logins from one address look like a brute-force attempt to fail2ban, and the monitor gets banned exactly when you need it. We generate a one-line setup script that adds the IP to the allow list, so preparing a new server takes a minute.\n\nKeep credentials encrypted at rest and never send them back to the browser. The panel stores SSH keys and passwords encrypted with a key that lives only in the server environment.\n\nAlert on transitions, not on state. One email when a project goes down and one when it recovers. Nothing else. A monitor that emails every fifteen minutes is muted within a week.\n\nBind the panel itself to localhost and put it behind HTTPS on its own subdomain. The monitoring tool has the keys to everything, so it deserves the same care as a bank's admin panel.\n\nNone of this is novel. It is the boring, reliable version of a problem every small studio has. Our version takes about ten minutes to deploy with Docker Compose, and it has quietly paged us about real outages more times than we would like to admit.",
+    image: "https://files.zamansheikh.com/monitoring-projects-across-many-vps-dcqqjvzk22.jpg",
+    imagePublicId: "nimbus:6ab2c0b9ff497db7902df2eb",
   },
   {
-    id: "p-03", title: "Inside our 4-day delivery cadence",
-    author: "Junaid Ali", date: "Apr 28, 2026", read: "5 min",
-    category: "Culture", status: "Published", views: 5912,
-    excerpt: "Most studios call themselves agile. We do something more specific — a 4-day cadence with a fixed Friday review. It's boring on purpose.",
-    body:
-      "Every engagement we run ships a measurable thing every four working days. Monday is scoping. Tuesday and Wednesday are build. Thursday morning is integration. Thursday afternoon is the demo with the client. Friday morning is the retro. Friday afternoon is rest.\n\n" +
-      "Why four and not two-week sprints? Two reasons. First, it forces small slices — anything that doesn't fit in four days has to be cut. That's a healthy pressure. Second, the cadence is short enough that a stalled engagement becomes visible inside one cycle instead of three.\n\n" +
-      "What we don't do: nightly standups, sprint planning meetings, story-point estimation. The cadence is the structure. Within it, the squad self-organises.",
+    id: "rag-evaluation-harness-first",
+    title: "Build the evaluation harness before the RAG pipeline",
+    author: "Zaman Sheikh",
+    date: "Aug 27, 2026",
+    read: "8 min",
+    category: "AI",
+    status: "Published",
+    views: 0,
+    excerpt: "Every retrieval-augmented system we have shipped went faster when the evals came first. The pipeline is the easy part.",
+    body: "The first RAG system we built for a client took three weeks. The first one we built with an evaluation harness in place took eight days, and it was better. The difference was not the model. It was that we could tell, within a minute, whether a change helped.\n\nRetrieval-augmented generation looks simple on a whiteboard: chunk the documents, embed them, find the nearest chunks for a question, hand them to a model. Every one of those steps has five reasonable settings, and the combinations multiply. Without a fixed way to score the output, you tune by feel, and feel is expensive.\n\nHere is what our harness looks like. It is deliberately small.\n\nA question set. Thirty to eighty questions that real users would ask, written with the client, each paired with the answer a domain expert would accept and the source passage that supports it. Half the value of the project is in this file. It exposes what the documents do not actually cover.\n\nA retrieval score. For each question, did the top results include the supporting passage? We report recall at five and at ten. This isolates the chunking and embedding decisions from the model entirely.\n\nAn answer score. A separate judge prompt, frozen for the life of the project, compares the generated answer to the accepted one and returns pass, partial or fail with a one-line reason. We do not let the judge model change when the generation model changes.\n\nA cost and latency line. Tokens in, tokens out, seconds per answer. A configuration that scores two points higher and costs three times more is usually the wrong one.\n\nThe harness runs from one command and writes a markdown table we paste into the project channel. That is the whole ceremony.\n\nWhat it taught us, repeatedly:\n\nChunking matters more than the embedding model. Aligning chunks to the documents' own structure, a section, a clause, a function, beat every fixed-size window we tried.\n\nA reranker is cheaper than a bigger context. Retrieving twenty candidates and reranking to five improved answers more than doubling the context window, at a fraction of the cost.\n\nHallucinations mostly come from retrieval misses. When the right passage is not in the context, the model guesses. Fixing recall fixed most of the answers people complained about.\n\nUsers ask questions the documents cannot answer. The harness makes this visible early, and the honest fix is a clear \"not covered\" response, not a more confident model.\n\nIf you are starting a RAG project this month, spend the first two days on the question set and the scoring script. It feels like a delay. It is the fastest path to something you can defend in a review.",
+    image: "https://files.zamansheikh.com/rag-evaluation-harness-first-kbtz6spdd8.jpg",
+    imagePublicId: "nimbus:6ab2c0bbff497db7902df2ec",
   },
   {
-    id: "p-04", title: "Why we built our own internal evals harness",
-    author: "Sadia Karim", date: "Apr 17, 2026", read: "11 min",
-    category: "Engineering", status: "Published", views: 14302,
-    excerpt: "We tried four off-the-shelf eval frameworks before building our own. The one we kept does three things — none of them flashy.",
-    body:
-      "Off-the-shelf eval frameworks have a recurring problem: they're built around generic benchmarks. We needed something built around our clients' definition of correctness, which is rarely 'matches a reference answer'.\n\n" +
-      "What our harness does:\n\n" +
-      "1. Stores eval cases as plain markdown files in the repo, with the expected behaviour as a paragraph not a string. A judge model (a separate prompt, frozen) decides pass/fail.\n\n" +
-      "2. Runs nightly against main and posts a diff to Slack. If a metric drops more than 2%, the PR that caused it gets flagged.\n\n" +
-      "3. Lets a domain expert mark a case as 'still failing but it's OK now' — with a written justification stored next to the case. The team can't grade their own homework, but they can document a decision.\n\n" +
-      "The full source is on our GitHub.",
+    id: "zero-downtime-deploys-single-vps",
+    title: "Zero-downtime deploys on a single VPS with PM2, nginx and GitHub Actions",
+    author: "Zaman Sheikh",
+    date: "Aug 14, 2026",
+    read: "6 min",
+    category: "Engineering",
+    status: "Published",
+    views: 0,
+    excerpt: "You do not need Kubernetes to deploy without dropping requests. A process manager, a reverse proxy and a forty-line script cover most small products.",
+    body: "Most of the products we build run on one virtual server. Not because we cannot run a cluster, but because a single well-configured machine serves thousands of users for a few dollars a month, and the operational surface is something a two-person team can actually own.\n\nThe question we get asked is how to deploy to that one machine without an outage. The answer is a small amount of structure.\n\nThe pieces:\n\nnginx in front, terminating TLS and proxying each hostname to a local port. It never goes down during a deploy because nothing about it changes.\n\nPM2 running the app with a reload command, not a restart. Reload starts the new version, waits for it to be ready, then stops the old one. For a Node server that binds a port, that is the whole zero-downtime trick.\n\nA deploy script in the repo that does exactly four things: fetch and reset to the target commit, install dependencies with a lockfile, build, reload. It is idempotent, so running it twice is safe.\n\nA GitHub Actions workflow that SSHes into the server and runs the script on every push to the main branch. The secrets are the host, a deploy user and a private key. That is all the CI knows.\n\nThe details that bite people:\n\nBuild-time configuration is baked in. If a value is compiled into the bundle, changing it needs a rebuild, and the script should say so loudly.\n\nThe script rewrites itself. If the deploy script fetches new code and the new code contains a changed deploy script, the shell may execute a half-old, half-new file. Wrap the body in a function so the whole file is parsed before anything runs. We learned this one the hard way.\n\nSecrets live outside the repo. An environment file that git never sees, created once on the server, untouched by the reset.\n\nHealth before reload. If the build fails the script must stop before it touches the running process. The set -e at the top is not optional.\n\nLog to files, and rotate them. PM2 will happily fill a disk.\n\nRollback is a hash. The script accepts a branch or commit, so returning to the last good build is the same command with a different argument.\n\nThat is genuinely all of it. The whole setup is under two hundred lines including the nginx config, it has no moving parts you cannot read in ten minutes, and it deploys in about ninety seconds. When a product outgrows it, the same script becomes the build step in whatever comes next.",
+    image: "https://files.zamansheikh.com/zero-downtime-deploys-single-vps-sa_jizat0k.jpg",
+    imagePublicId: "nimbus:6ab2c0bcff497db7902df2ed",
   },
   {
-    id: "p-05", title: "From contract to commit: how engagements actually start",
-    author: "Mehedi Hasan", date: "Apr 02, 2026", read: "7 min",
-    category: "Operations", status: "Published", views: 3408,
-    excerpt: "The two weeks between 'we'd like to work with you' and the first git commit do more for the engagement than any onboarding doc.",
-    body:
-      "We've optimised the first two weeks of every engagement until they barely look like a setup phase.\n\n" +
-      "Day 1: contract signed in the morning, the squad joins the client Slack in the afternoon. By end-of-day they have read access to the relevant repos and one open architecture question pinned in the channel.\n\n" +
-      "Day 3: the squad has shadowed one production incident or one customer support call. This is non-negotiable. You can't help build a system you've only seen on slides.\n\n" +
-      "Day 7: written diagnosis delivered. Three pages, in plain language. Even clients who decide not to engage further get this — it's the deliverable for the discovery phase regardless.\n\n" +
-      "Day 14: first commit to production. By then the squad has earned the right to make it.",
+    id: "scoping-fixed-price-engagement-two-weeks",
+    title: "How we scope a fixed-price engagement in two weeks",
+    author: "Zaman Sheikh",
+    date: "Jul 30, 2026",
+    read: "5 min",
+    category: "Operations",
+    status: "Published",
+    views: 0,
+    excerpt: "Fixed-price work only goes wrong when the scope was never really agreed. Our two-week discovery makes the agreement real before anyone writes code.",
+    body: "Clients ask for fixed prices because they want certainty. Studios avoid them because the scope is never as fixed as the price. We do a lot of fixed-price work, and the reason it works is a paid two-week discovery that produces the scope before the quote.\n\nWeek one is about understanding.\n\nWe sit with the people who will use the software, not just the person buying it. A day of interviews usually changes the brief more than a month of email. We collect every existing document, spreadsheet and half-built prototype, and we read all of them.\n\nWe map the data. What entities exist, who owns them, what changes and how often. Most estimation errors we have made were data errors, not screen errors.\n\nWe write the walkthrough. A plain-language description of what the system does, one step at a time, from the point of view of each kind of user. No wireframes yet. If the walkthrough is wrong, wireframes make it expensively wrong.\n\nWeek two is about deciding.\n\nWe draw the screens, roughly. Enough to count them and to agree what is on each one.\n\nWe list what is out. This is the most valuable page in the document. Reporting, mobile, integrations, migrations, admin tools: each is either in with a description or out with a sentence saying so.\n\nWe pick the risks. Two or three things that could blow up the estimate, and for each one a plan: a spike, a prototype, or a client decision by a date.\n\nWe price it. The estimate is per screen and per integration, with the risk plan priced separately, and it comes with a delivery calendar that shows what the client will see each week.\n\nThe client gets all of it whether or not they hire us to build. That matters. The discovery is a product, and it has to be worth its own price.\n\nWhat this buys both sides: a fixed price that is genuinely fixed, because the thing being priced is written down; a build phase with almost no surprises, because the surprises were found in week one; and a change process that is easy, because anything not in the document is a change, priced the same way.\n\nTwo weeks feels slow to a client who wants to start on Monday. It is, in our experience, the fastest way to finish.",
+    image: "https://files.zamansheikh.com/scoping-fixed-price-engagement-two-weeks-bpepz4lzat.jpg",
+    imagePublicId: "nimbus:6ab2c0beff497db7902df2ee",
   },
   {
-    id: "p-06", title: "Field notes from rewiring a 12-year-old monolith",
-    author: "Zaman Sheikh", date: "Mar 21, 2026", read: "14 min",
-    category: "Engineering", status: "Draft", views: 0,
-    excerpt: "What we did, what we'd do again, and the one decision we'd reverse.",
-    body:
-      "(Draft — published once the engagement closes.) A retrospective on the Helix Bank platform migration, what surprised us, the architectural decisions we'd repeat, and the one decision that we'd reverse if we ran the project again.",
+    id: "admin-panels-people-actually-use",
+    title: "Designing admin panels people actually use",
+    author: "Zaman Sheikh",
+    date: "Jul 16, 2026",
+    read: "6 min",
+    category: "Design",
+    status: "Published",
+    views: 0,
+    excerpt: "Internal tools get half the design attention of the public product and twice the daily use. Eight rules we follow after building a few too many of them.",
+    body: "Every product we build has a back office: the CRM, the content manager, the operations dashboard that a handful of people live in for eight hours a day. These tools get a fraction of the design time the public product gets, and they are used far more intensely. After building more of them than we can count, here is what we now do by default.\n\nOne login. If the team manages a website and a CRM and an inbox, they should sign in once and see all of it in one sidebar. Every extra login is a tab that stays open with a password on a sticky note. We recently merged a client's site admin into their CRM for exactly this reason, and the first thing they said was that they had stopped dreading content updates.\n\nRole-based, not permission-based. Five roles with clear names beat forty checkboxes. Founder, manager, accountant, auditor, contributor. Each role hides what it cannot use instead of showing it greyed out.\n\nTables that can be worked in. Inline status changes, keyboard search, a details drawer that does not navigate away. The most common action on any row should be one click.\n\nA form engine, not forty forms. When every content type has its own hand-written form, they all drift. Describe fields once, render them once, and validation, image upload and layout stay consistent for free.\n\nOptimistic updates with honest failures. Change the row immediately, save in the background, and if the save fails put the row back and say why. Nothing feels slower than an admin panel that waits for the server on every click.\n\nReal dates and relative dates together. \"3 days ago\" in the table, the full timestamp on hover. People want both, at different moments.\n\nAudit everything that mutates. Who changed what, when, from where, in an append-only log. It is the feature nobody asks for and everybody needs the first time something disappears.\n\nPreview on the real site. A button that opens the public page for the thing you are editing removes an entire category of \"is it live yet\" questions.\n\nNone of this is expensive. Most of it is a decision made in the first week rather than a rewrite in the sixth month. Internal tools are where your client's team spends its day. Design them like it.",
+    image: "https://files.zamansheikh.com/admin-panels-people-actually-use-y--ympplxt.jpg",
+    imagePublicId: "nimbus:6ab2c0bfff497db7902df2ef",
   },
 ];
 
