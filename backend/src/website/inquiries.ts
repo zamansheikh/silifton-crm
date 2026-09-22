@@ -11,7 +11,7 @@ import type { Inquiry } from "./types.js";
 
 const router = Router();
 
-const BUDGETS = ["$50k–$100k", "$100k–$250k", "$250k–$500k", "$500k+", "Not sure yet"] as const;
+const BUDGETS = ["$5k–$10k", "$10k–$25k", "$25k–$50k", "$50k+", "Not sure yet"] as const;
 const STATUSES = ["New", "In review", "Replied", "Won", "Closed"] as const;
 const PRIORITIES = ["Low", "Medium", "High", "Critical"] as const;
 
@@ -86,7 +86,7 @@ router.post(
       message: b.message,
       date: now.toISOString(),
       status: "New",
-      priority: b.budget === "$500k+" ? "Critical" : b.budget === "$250k–$500k" ? "High" : "Medium",
+      priority: b.budget === "$50k+" ? "Critical" : b.budget === "$25k–$50k" ? "High" : "Medium",
       createdAt: now,
       updatedAt: now,
     };
