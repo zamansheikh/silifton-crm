@@ -36,7 +36,9 @@ router.get(
   "/:collection",
   asyncHandler(async (req, res) => {
     const c = assertCollection(String(req.params.collection));
-    const items = await web.content(c).find().sort({ createdAt: 1 }).toArray();
+    // Services carry an explicit display order ("01", "02"…); everything else
+    // lists in creation order.
+    const items = await web.content(c).find().sort(c === "services" ? { num: 1 } : { createdAt: 1 }).toArray();
     res.json(stripAll(items));
   }),
 );
