@@ -111,19 +111,17 @@ type Stamped = { createdAt?: Date; updatedAt?: Date; [k: string]: unknown };
 const str = (v: unknown) => (typeof v === "string" ? v : "");
 
 async function activity(): Promise<Array<{ who: string; action: string; target: string; time: string }>> {
-  const [inqs, apps, posts, port, team] = await Promise.all([
+  const [inqs, apps, posts, port] = await Promise.all([
     web.inquiries().find().sort({ createdAt: -1 }).limit(5).toArray(),
     web.applications().find().sort({ createdAt: -1 }).limit(5).toArray(),
     web.content("posts").find().sort({ updatedAt: -1 }).limit(5).toArray(),
     web.content("portfolio").find().sort({ updatedAt: -1 }).limit(3).toArray(),
-    web.content("team").find().sort({ updatedAt: -1 }).limit(3).toArray(),
   ]);
   const items: Array<{ when: Date; who: string; action: string; target: string }> = [];
   for (const i of inqs as Stamped[]) items.push({ when: i.createdAt ?? new Date(0), who: "System", action: "received new inquiry from", target: `${str(i.name)} · ${str(i.company)}`.trim() });
   for (const a of apps as Stamped[]) items.push({ when: a.createdAt ?? new Date(0), who: "System", action: `moved candidate to ${str(a.stage) || "New"}:`, target: `${str(a.candidate)} — ${str(a.role)}` });
   for (const p of posts as Stamped[]) items.push({ when: p.updatedAt ?? new Date(0), who: str(p.author) || "Editor", action: p.status === "Published" ? "published" : "updated draft", target: str(p.title) });
   for (const c of port as Stamped[]) items.push({ when: c.updatedAt ?? new Date(0), who: "Editor", action: "updated case study", target: `${str(c.client)} — ${str(c.title)}` });
-  for (const t of team as Stamped[]) items.push({ when: t.updatedAt ?? new Date(0), who: "Editor", action: "updated team member", target: str(t.name) });
   items.sort((a, b) => b.when.getTime() - a.when.getTime());
   return items.slice(0, 10).map((x) => ({ who: x.who, action: x.action, target: x.target, time: relativeTime(x.when) }));
 }

@@ -87,10 +87,15 @@ const updateSchema = z.object({
   hourly: z.number().optional(),
   role: z.enum(["Founder", "PM", "Dev", "Design", "QA", "Ops"]).optional(),
   appRole: z.enum(["founder", "director", "pm", "accountant", "auditor", "dev"]).optional(),
+  // Public-website profile
+  avatar: z.string().max(500).optional(),
+  avatarPublicId: z.string().max(200).optional(),
+  focus: z.string().max(120).optional(),
+  showOnWebsite: z.boolean().optional(),
 });
 
 // Fields a member may change on their own profile.
-const SELF_FIELDS = new Set(["name", "title", "mood", "status"]);
+const SELF_FIELDS = new Set(["name", "title", "mood", "status", "avatar", "avatarPublicId", "focus"]);
 
 router.patch(
   "/:id",

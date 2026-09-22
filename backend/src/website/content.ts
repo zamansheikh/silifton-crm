@@ -6,9 +6,44 @@ import { z } from "zod";
 import { requireAuth, requireRole } from "../lib/auth.js";
 import { asyncHandler, badRequest, notFound } from "../lib/http.js";
 import { web, stripAll, stripDoc } from "./db.js";
+import { collections } from "../db.js";
 import { CONTENT_COLLECTIONS, type ContentCollection, type ContentDoc } from "./types.js";
+import type { TeamMember } from "../types.js";
 
 const router = Router();
+
+// ── Team = CRM staff ────────────────────────────────────────────────
+// The About page lists the people in the CRM's Team page, not a separate
+// content collection. Opt-in per member ("Show on silifton.com"), and only
+// public-safe fields leave the API.
+const initials = (name: string) => name.trim().split(/\s+/).filter(Boolean).map((n) => n[0] ?? "").join("").slice(0, 2).toUpperCase();
+function publicProfile(m: TeamMember) {
+  return {
+    id: m.id,
+    name: m.name,
+    role: m.title || m.role,
+    initials: initials(m.name),
+    focus: m.focus || m.role,
+    ...(m.avatar ? { avatar: m.avatar } : {}),
+  };
+}
+
+router.get(
+  "/team",
+  asyncHandler(async (_req, res) => {
+    const staff = await collections.team().find({ showOnWebsite: true }).sort({ createdAt: 1 }).toArray();
+    res.json(staff.map(publicProfile));
+  }),
+);
+
+router.get(
+  "/team/:id",
+  asyncHandler(async (req, res) => {
+    const m = await collections.team().findOne({ id: String(req.params.id), showOnWebsite: true });
+    if (!m) throw notFound("Team member not found");
+    res.json(publicProfile(m));
+  }),
+);
 
 function assertCollection(value: string): ContentCollection {
   if (!(CONTENT_COLLECTIONS as readonly string[]).includes(value)) {

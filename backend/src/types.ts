@@ -22,6 +22,11 @@ export interface TeamMember {
   util: number;
   hourly: number;
   createdAt?: Date;
+  // Public-website profile (About page) — optional.
+  avatar?: string;
+  avatarPublicId?: string;
+  focus?: string;
+  showOnWebsite?: boolean;
 }
 
 // Public team member (no secrets) — what the API returns.

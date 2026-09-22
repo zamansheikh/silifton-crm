@@ -219,36 +219,6 @@ export const COLLECTIONS: CollectionDef[] = [
     previewPath: () => "/",
   },
   {
-    key: "team",
-    label: "Team",
-    singular: "team member",
-    blurb: "People shown on the public About page (separate from CRM staff accounts).",
-    fields: [
-      { key: "name", label: "Name", type: "text", half: true, required: true },
-      { key: "role", label: "Role", type: "text", half: true, required: true, placeholder: "Chief Technology Officer" },
-      { key: "focus", label: "Focus", type: "text", half: true, required: true, placeholder: "Architecture, Platform" },
-      { key: "initials", label: "Initials", type: "text", half: true, maxLength: 3, help: "Fallback when there is no photo; derived from the name if blank." },
-      { key: "avatar", label: "Photo", type: "image", aspect: "1/1", publicIdKey: "avatarPublicId", help: "Square headshot, 400×400 or larger." },
-    ],
-    columns: [
-      { key: "name", label: "Member", width: "1fr", render: (it) => <TitleCell thumb={<Thumb round image={s(it.avatar) || undefined} letter={s(it.initials) || initials(s(it.name))} />} title={s(it.name)} sub={s(it.role)} /> },
-      { key: "focus", label: "Focus", width: "220px", render: (it) => <span style={{ fontSize: 12.5, color: "var(--text-sub)" }}>{s(it.focus)}</span> },
-    ],
-    searchKeys: ["name", "role", "focus"],
-    defaults: {},
-    newId: (form, items) => {
-      const base = `team-${slug(s(form.name))}`;
-      const taken = new Set(items.map((i) => i.id));
-      let id = base;
-      let n = 2;
-      while (taken.has(id)) id = `${base}-${n++}`;
-      return id;
-    },
-    idOf: (it) => s(it.id),
-    previewPath: () => "/about",
-    normalize: (p) => ({ ...p, initials: (s(p.initials).trim() || initials(s(p.name))).toUpperCase().slice(0, 3) }),
-  },
-  {
     key: "careers",
     label: "Careers",
     singular: "job opening",

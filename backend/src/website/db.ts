@@ -19,7 +19,6 @@ import {
   SEED_PORTFOLIO,
   SEED_POSTS,
   SEED_SERVICES,
-  SEED_TEAM,
   SEED_TESTIMONIALS,
 } from "./seed.js";
 
@@ -89,14 +88,11 @@ async function backfillFromSeed(c: ContentCollection, seed: Rec[]): Promise<void
   if (ops.length) await col.bulkWrite(ops);
 }
 
-const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-
 export async function seedWebsiteIfEmpty(): Promise<void> {
   await Promise.all([
     seedIfEmpty("services", SEED_SERVICES.map((s) => ({ ...s, id: s.num }))),
     seedIfEmpty("portfolio", SEED_PORTFOLIO as unknown as Rec[]),
     seedIfEmpty("posts", SEED_POSTS as unknown as Rec[]),
-    seedIfEmpty("team", SEED_TEAM.map((t) => ({ ...t, id: `team-${slug(t.name)}` }))),
     seedIfEmpty("testimonials", SEED_TESTIMONIALS as unknown as Rec[]),
     seedIfEmpty("careers", SEED_CAREERS as unknown as Rec[]),
   ]);

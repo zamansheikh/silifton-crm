@@ -2,11 +2,12 @@
 // These collections are shared with the marketing site (silifton.com):
 // the site reads them anonymously, the CRM edits them.
 
+// "team" is not a content collection any more: the public site's team is the
+// CRM staff list (see /api/content/team in content.ts).
 export type ContentCollection =
   | "services"
   | "portfolio"
   | "posts"
-  | "team"
   | "testimonials"
   | "careers";
 
@@ -14,7 +15,6 @@ export const CONTENT_COLLECTIONS: readonly ContentCollection[] = [
   "services",
   "portfolio",
   "posts",
-  "team",
   "testimonials",
   "careers",
 ] as const;

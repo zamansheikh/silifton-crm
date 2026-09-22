@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon, I, Avatar, Eyebrow, ProgressBar, SectionHeader } from "@/components/primitives";
 import { Modal, Field } from "@/components/modal";
+import { ImageField } from "@/components/website/image-field";
+import { Toggle } from "@/components/website/ui";
 import { useApp } from "@/providers/app";
 import { api, ApiError } from "@/lib/api";
 import type { Member } from "@/lib/types";
@@ -257,6 +259,10 @@ function EditMemberModal({
   const [mood, setMood] = useState(member.mood);
   const [hourly, setHourly] = useState(member.hourly);
   const [util, setUtil] = useState(member.util);
+  const [avatar, setAvatar] = useState(member.avatar ?? "");
+  const [avatarPublicId, setAvatarPublicId] = useState(member.avatarPublicId ?? "");
+  const [focus, setFocus] = useState(member.focus ?? "");
+  const [showOnWebsite, setShowOnWebsite] = useState(member.showOnWebsite === true);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -264,9 +270,10 @@ function EditMemberModal({
     setErr(null);
     setBusy(true);
     try {
+      const site = { avatar, avatarPublicId, focus };
       const body: Partial<Member> = canManage
-        ? { name, title, role: jobRole, appRole, status, mood, hourly, util }
-        : { name, title, status, mood };
+        ? { name, title, role: jobRole, appRole, status, mood, hourly, util, ...site, showOnWebsite }
+        : { name, title, status, mood, ...site };
       await api.team.update(member.id, body);
       onSaved();
     } catch (e) {
@@ -319,7 +326,20 @@ function EditMemberModal({
           </div>
         </>
       )}
-      {!canManage && isSelf && <div style={{ fontSize: 11.5, color: "var(--text-dim)", marginBottom: 10 }}>You can update your own name, title, status and focus. Rate and role are managed by an admin.</div>}
+      {(canManage || isSelf) && (
+        <div style={{ marginTop: 4, paddingTop: 12, borderTop: "1px solid var(--border)" }}>
+          <div style={{ fontSize: 11, color: "var(--text-dim)", fontWeight: 600, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Public website · About page</div>
+          <ImageField label="Photo" value={avatar} aspect="1/1" help="Square headshot. Falls back to initials." onChange={(url, publicId) => { setAvatar(url); setAvatarPublicId(url ? publicId ?? "" : ""); }} />
+          <Field label="One-line focus (shown under the title)"><input className="input" value={focus} onChange={(e) => setFocus(e.target.value)} placeholder="Architecture, Platform" /></Field>
+          {canManage && (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+              <span style={{ fontSize: 13, color: "var(--text-sub)" }}>Show on silifton.com</span>
+              <Toggle value={showOnWebsite} onChange={setShowOnWebsite} />
+            </div>
+          )}
+        </div>
+      )}
+      {!canManage && isSelf && <div style={{ fontSize: 11.5, color: "var(--text-dim)", marginBottom: 10 }}>You can update your own name, title, status, focus and photo. Rate and role are managed by an admin.</div>}
       {err && <div style={{ fontSize: 12, color: "var(--danger)", marginBottom: 10 }}>{err}</div>}
       <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
         <div>{canDelete && <button className="btn" onClick={remove} disabled={busy} style={{ color: "var(--danger)", borderColor: "color-mix(in oklab, var(--danger) 35%, transparent)" }}><Icon d={I.trash} size={13} /> Remove</button>}</div>

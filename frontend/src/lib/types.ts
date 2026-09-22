@@ -55,6 +55,11 @@ export interface Member {
   status: MemberStatus;
   util: number;
   hourly: number;
+  // Public-website profile (About page)
+  avatar?: string;
+  avatarPublicId?: string;
+  focus?: string;
+  showOnWebsite?: boolean;
 }
 
 export interface Client {
@@ -403,7 +408,7 @@ export interface DashboardData {
 }
 
 // ── Public website (silifton.com) — content managed from the CRM ─────
-export type ContentCollection = "services" | "portfolio" | "posts" | "team" | "testimonials" | "careers";
+export type ContentCollection = "services" | "portfolio" | "posts" | "testimonials" | "careers";
 
 // Content items are schemaless apart from `id`; the editor config decides fields.
 export interface WebItem {
