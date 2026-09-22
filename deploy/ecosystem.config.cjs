@@ -30,7 +30,10 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: API_PORT,
-        CORS_ORIGIN: "https://crm.silifton.com",
+        // The CRM UI plus the public site (its contact/careers forms and client-side
+        // content fetches call this API directly from the browser).
+        CORS_ORIGIN: "https://crm.silifton.com,https://silifton.com,https://www.silifton.com",
+        WEBSITE_HOST: "silifton.com",
         COOKIE_NAME: "silifton_session",
         MONGODB_DB: "silifton",
         JWT_EXPIRES_IN: "7d",

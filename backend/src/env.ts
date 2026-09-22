@@ -26,4 +26,9 @@ export const env = {
   cloudinaryUrl: process.env.CLOUDINARY_URL || "",
   cloudinaryFolder: process.env.CLOUDINARY_FOLDER || "silifton",
   uploadMaxBytes: Number(process.env.UPLOAD_MAX_BYTES || 10485760),
+  // Public website (silifton.com) — inquiry notifications + referrer classification.
+  resendApiKey: process.env.RESEND_API_KEY || "",
+  contactEmail: process.env.CONTACT_EMAIL || "",
+  fromEmail: process.env.FROM_EMAIL || "Silifton <hello@silifton.com>",
+  websiteHost: (process.env.WEBSITE_HOST || "silifton.com").replace(/^www\./, ""),
 };

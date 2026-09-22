@@ -29,6 +29,11 @@ const NAV: { id: string; title: string; href: string }[] = [
   { id: "reports", title: "Reports", href: "/reports" },
   { id: "audit", title: "Audit log", href: "/audit" },
   { id: "settings", title: "Settings", href: "/settings" },
+  { id: "website", title: "Website overview", href: "/website" },
+  { id: "website-content", title: "Website content", href: "/website/content" },
+  { id: "website-inquiries", title: "Website inquiries", href: "/website/inquiries" },
+  { id: "website-applications", title: "Job applications", href: "/website/applications" },
+  { id: "website-settings", title: "Site settings", href: "/website/settings" },
 ];
 
 export function CommandPalette() {

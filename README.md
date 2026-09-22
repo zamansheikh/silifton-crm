@@ -7,6 +7,25 @@ A project + time-management workspace for a software studio — built from the `
 
 The two run as separate processes and talk over CORS with credentialed cookies.
 
+## Public website (silifton.com)
+
+The marketing site's content is managed here too, under **Website** in the sidebar
+(founder / director / PM roles; auditors read-only):
+
+- **Overview** — traffic analytics, sources, latest inquiries, activity.
+- **Content** — services, portfolio, blog, testimonials, team, careers (with Cloudinary image uploads).
+- **Inquiries** — contact-form inbox with status / priority triage.
+- **Applications** — careers pipeline with stages and scores.
+- **Site settings** — hero, about, footer, social links, SEO defaults, general.
+
+The API serves the site's public reads and forms under `/api/content`, `/api/settings`,
+`/api/inquiries`, `/api/applications` and `/api/analytics/track` (see `backend/src/website/`).
+The site itself lives in the [`silifton`](https://github.com/zamansheikh/silifton) repo and
+points `NEXT_PUBLIC_API_URL` at this API. Its origins must be listed in `CORS_ORIGIN`.
+
+Optional env for the website module (`backend/.env`): `RESEND_API_KEY`, `CONTACT_EMAIL`,
+`FROM_EMAIL` (inquiry notifications) and `WEBSITE_HOST` (referrer classification).
+
 ## Prerequisites
 
 - Node.js 20.9+ (tested on 22)

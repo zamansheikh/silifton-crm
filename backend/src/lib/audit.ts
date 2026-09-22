@@ -12,14 +12,27 @@ const ENTITY: Record<string, string> = {
   time: "time",
   accounting: "accounting",
   auth: "auth",
+  // Public website (silifton.com) data managed from the CRM.
+  content: "content",
+  inquiries: "inquiry",
+  applications: "application",
+  settings: "setting",
+  uploads: "upload",
 };
 
 const VERB: Record<string, string> = { POST: "create", PATCH: "update", PUT: "update", DELETE: "delete" };
 
 function describe(method: string, path: string): { entity: string; action: string; entityId?: string } {
   const segs = path.replace(/^\/api\//, "").split("/").filter(Boolean);
+  // /api/admin/<noun>/… is just the authenticated mirror of /api/<noun>/…
+  if (segs[0] === "admin") segs.shift();
   const head = segs[0] ?? "";
   const entity = ENTITY[head] ?? head;
+
+  // Website content: /content/<collection>/<id> → content.<collection>.<verb>
+  if (head === "content") {
+    return { entity, action: `content.${segs[1] ?? "?"}.${VERB[method] ?? method.toLowerCase()}`, entityId: segs[2] };
+  }
 
   // For namespaced areas the meaningful noun is the second segment.
   if (head === "accounting" || head === "auth") {
@@ -36,6 +49,8 @@ function describe(method: string, path: string): { entity: string; action: strin
 // Append-only audit log of every successful mutating request.
 export function auditMiddleware(req: Request, res: Response, next: NextFunction) {
   if (!["POST", "PATCH", "PUT", "DELETE"].includes(req.method)) return next();
+  // The public page-view beacon is high-volume and not a business mutation.
+  if (req.originalUrl.startsWith("/api/analytics/track")) return next();
 
   // Capture now: Express rewrites req.path/req.url as it descends into routers,
   // so by the time `finish` fires it would be router-relative.

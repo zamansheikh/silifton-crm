@@ -134,6 +134,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void } = {}) {
     assets: access.assets,
     reports: access.reports && tweak.showReports !== false,
     audit: access.audit,
+    website: access.website,
   };
   const operate = show.invoices || show.expenses || show.accounting || show.assets || show.reports;
   const showCredentials = role === "founder" || credentialsAccess;
@@ -260,6 +261,16 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void } = {}) {
             {show.reports && (
               <NavItem collapsed={collapsed} active={is("/reports")} href="/reports" label="Reports" icon={<Icon d={I.reports} />} />
             )}
+          </NavGroup>
+        )}
+
+        {show.website && (
+          <NavGroup collapsed={collapsed} label="Website">
+            <NavItem collapsed={collapsed} active={pathname === "/website"} href="/website" label="Overview" icon={<Icon d={I.globe} />} />
+            <NavItem collapsed={collapsed} active={is("/website/content")} href="/website/content" label="Content" icon={<Icon d={I.layers} />} />
+            <NavItem collapsed={collapsed} active={is("/website/inquiries")} href="/website/inquiries" label="Inquiries" icon={<Icon d={I.mail} />} />
+            <NavItem collapsed={collapsed} active={is("/website/applications")} href="/website/applications" label="Applications" icon={<Icon d={I.user} />} />
+            <NavItem collapsed={collapsed} active={is("/website/settings")} href="/website/settings" label="Site settings" icon={<Icon d={I.edit} />} />
           </NavGroup>
         )}
 

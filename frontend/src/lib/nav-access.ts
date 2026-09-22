@@ -14,10 +14,11 @@ import type { AppRole } from "@/lib/types";
 //   Accounting/Assets/Reports
 //  Audit log                   ✓               ✓       ✓          ✓       ✗
 //  Settings                    ✓               ✓       ✓          ✓       ✓
+//  Website (public site)       ✓               ✓       ✗          ✓       ✗
 export type NavKey =
   | "dashboard" | "projects" | "tasks" | "time" | "clients" | "team"
   | "invoices" | "expenses" | "accounting" | "assets" | "reports"
-  | "audit" | "settings";
+  | "audit" | "settings" | "website";
 
 export function navAccess(perms: Perms, role: AppRole): Record<NavKey, boolean> {
   const projectWork = perms.projects || perms.readOnly || role === "dev"; // tasks, time
@@ -36,6 +37,8 @@ export function navAccess(perms: Perms, role: AppRole): Record<NavKey, boolean> 
     reports: finance,
     audit: role !== "dev",
     settings: true,
+    // Marketing-site content, inbox and analytics. Auditors see it read-only.
+    website: perms.projects || perms.readOnly,
   };
 }
 
@@ -57,6 +60,7 @@ export function routeKey(pathname: string): NavKey | null {
     reports: "reports",
     audit: "audit",
     settings: "settings",
+    website: "website",
   };
   return map[seg] ?? null;
 }

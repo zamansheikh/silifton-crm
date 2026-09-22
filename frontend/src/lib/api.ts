@@ -27,6 +27,14 @@ import type {
   AuditPack,
   ShareLink,
   Credential,
+  ContentCollection,
+  WebItem,
+  WebInquiry,
+  WebApplication,
+  WebOverview,
+  WebSeries,
+  WebSettings,
+  WebUpload,
 } from "./types";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:7011";
@@ -84,6 +92,8 @@ const post = <T>(p: string, body?: unknown) =>
 const patch = <T>(p: string, body: unknown) =>
   request<T>(p, { method: "PATCH", body: JSON.stringify(body) });
 const del = <T>(p: string) => request<T>(p, { method: "DELETE" });
+const delWith = <T>(p: string, body: unknown) =>
+  request<T>(p, { method: "DELETE", body: JSON.stringify(body) });
 
 export const api = {
   auth: {
@@ -278,5 +288,43 @@ export const api = {
     export: () => get<Credential[]>("/credentials/export"),
     import: (items: Partial<Credential>[], mode: "merge" | "replace") =>
       post<{ ok: true; count: number }>("/credentials/import", { items, mode }),
+  },
+  // Public website (silifton.com) — the marketing site reads these collections
+  // anonymously; the CRM is the only place they're edited.
+  website: {
+    content: {
+      list: <T extends WebItem = WebItem>(c: ContentCollection) => get<T[]>(`/admin/content/${c}`),
+      create: <T extends WebItem = WebItem>(c: ContentCollection, body: Record<string, unknown>) =>
+        post<T>(`/admin/content/${c}`, body),
+      update: <T extends WebItem = WebItem>(c: ContentCollection, id: string, body: Record<string, unknown>) =>
+        patch<T>(`/admin/content/${c}/${encodeURIComponent(id)}`, body),
+      remove: (c: ContentCollection, id: string) => del<void>(`/admin/content/${c}/${encodeURIComponent(id)}`),
+    },
+    inquiries: {
+      list: () => get<WebInquiry[]>("/inquiries"),
+      update: (id: string, body: Partial<Pick<WebInquiry, "status" | "priority">>) =>
+        patch<WebInquiry>(`/inquiries/${encodeURIComponent(id)}`, body),
+      remove: (id: string) => del<void>(`/inquiries/${encodeURIComponent(id)}`),
+    },
+    applications: {
+      list: () => get<WebApplication[]>("/applications"),
+      update: (id: string, body: Partial<Pick<WebApplication, "stage" | "score">>) =>
+        patch<WebApplication>(`/applications/${encodeURIComponent(id)}`, body),
+      remove: (id: string) => del<void>(`/applications/${encodeURIComponent(id)}`),
+    },
+    analytics: {
+      overview: () => get<WebOverview>("/analytics/overview"),
+      series: () => get<WebSeries>("/analytics/series"),
+    },
+    settings: {
+      list: () => get<WebSettings>("/admin/settings"),
+      get: (key: string) => get<Record<string, unknown>>(`/admin/settings/${encodeURIComponent(key)}`),
+      set: (key: string, value: Record<string, unknown>) =>
+        patch<Record<string, unknown>>(`/admin/settings/${encodeURIComponent(key)}`, value),
+    },
+    uploads: {
+      upload: (body: { name?: string; dataUrl: string }) => post<WebUpload>("/admin/uploads", body),
+      remove: (publicId: string) => delWith<void>("/admin/uploads", { publicId }),
+    },
   },
 };

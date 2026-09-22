@@ -21,10 +21,20 @@ import dashboardRoutes from "./routes/dashboard.js";
 import activityRoutes from "./routes/activity.js";
 import credentialRoutes from "./routes/credentials.js";
 import { auditMiddleware } from "./lib/audit.js";
+import { requireAuth } from "./lib/auth.js";
+import { ensureWebsiteIndexes, seedWebsiteIfEmpty } from "./website/db.js";
+import websiteContentRoutes from "./website/content.js";
+import websiteInquiryRoutes from "./website/inquiries.js";
+import websiteApplicationRoutes from "./website/applications.js";
+import websiteAnalyticsRoutes from "./website/analytics.js";
+import { publicRouter as websiteSettingsPublic, adminRouter as websiteSettingsAdmin } from "./website/settings.js";
+import websiteUploadRoutes from "./website/uploads.js";
 
 async function main() {
   await connect();
   await ensureIndexes();
+  await ensureWebsiteIndexes();
+  await seedWebsiteIfEmpty();
 
   const app = express();
   // Behind nginx in production: trust the first proxy hop so req.ip and
@@ -59,6 +69,17 @@ async function main() {
   app.use("/api/dashboard", dashboardRoutes);
   app.use("/api/activity", activityRoutes);
   app.use("/api/credentials", credentialRoutes);
+
+  // Public website (silifton.com). Same paths the site's old NestJS API served,
+  // so the marketing site only needed its API base URL changed.
+  app.use("/api/content", websiteContentRoutes);
+  app.use("/api/admin/content", requireAuth, websiteContentRoutes);
+  app.use("/api/inquiries", websiteInquiryRoutes);
+  app.use("/api/applications", websiteApplicationRoutes);
+  app.use("/api/analytics", websiteAnalyticsRoutes);
+  app.use("/api/settings", websiteSettingsPublic);
+  app.use("/api/admin/settings", websiteSettingsAdmin);
+  app.use("/api/admin/uploads", websiteUploadRoutes);
 
   app.use((_req, res) => {
     res.status(404).json({ error: "Route not found" });

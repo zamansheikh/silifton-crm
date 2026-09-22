@@ -401,3 +401,77 @@ export interface DashboardData {
   focusTotal: number;
   live: TimeEntry | null;
 }
+
+// ── Public website (silifton.com) — content managed from the CRM ─────
+export type ContentCollection = "services" | "portfolio" | "posts" | "team" | "testimonials" | "careers";
+
+// Content items are schemaless apart from `id`; the editor config decides fields.
+export interface WebItem {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+}
+
+export type WebInquiryStatus = "New" | "In review" | "Replied" | "Won" | "Closed";
+export type WebInquiryPriority = "Low" | "Medium" | "High" | "Critical";
+export interface WebInquiry {
+  id: string;
+  name: string;
+  company: string;
+  email: string;
+  subject: string;
+  budget: string;
+  message: string;
+  date: string;
+  status: WebInquiryStatus;
+  priority: WebInquiryPriority;
+}
+
+export type WebApplicationStage =
+  | "New" | "Tech screen" | "Portfolio review" | "Hiring manager" | "Onsite" | "Offer" | "Hired" | "Rejected";
+export interface WebApplication {
+  id: string;
+  candidate: string;
+  email: string;
+  role: string;
+  stage: WebApplicationStage;
+  score: number;
+  date: string;
+  source: string;
+  linkedin?: string;
+  portfolio?: string;
+  note?: string;
+}
+
+export interface WebKpi { label: string; value: number; total: number; trend: number; spark: number[]; color: string }
+export interface WebSource { label: string; value: number; color: string }
+export interface WebOverview {
+  kpis: WebKpi[];
+  months: string[];
+  visitors: number[];
+  inquiries: number[];
+  sources: WebSource[];
+  activity: Array<{ who: string; action: string; target: string; time: string }>;
+}
+export interface WebSeries {
+  months: string[];
+  visitors: number[];
+  totalLast30: number;
+  uniquesLast30: number;
+  avgPagesPerVisitor: number;
+  bounceRate: number;
+  topPages: Array<{ path: string; views: number; uniques: number }>;
+  topReferrers: Array<{ referrer: string; sessions: number; source: string }>;
+  sources: WebSource[];
+}
+export type WebSettings = Record<string, Record<string, unknown>>;
+export interface WebUpload {
+  url: string;
+  publicId: string;
+  format: string;
+  width: number;
+  height: number;
+  bytes: number;
+  resourceType: string;
+}

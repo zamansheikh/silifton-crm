@@ -27,6 +27,11 @@ function useCrumbs(): string[] {
   if (pathname.startsWith("/accounting")) return ["Operate", "Accounting"];
   if (pathname.startsWith("/assets")) return ["Operate", "Fixed Assets"];
   if (pathname.startsWith("/reports")) return ["Operate", "Reports"];
+  if (pathname === "/website") return ["Website", "Overview"];
+  if (pathname.startsWith("/website/content")) return ["Website", "Content"];
+  if (pathname.startsWith("/website/inquiries")) return ["Website", "Inquiries"];
+  if (pathname.startsWith("/website/applications")) return ["Website", "Applications"];
+  if (pathname.startsWith("/website/settings")) return ["Website", "Site settings"];
   if (pathname.startsWith("/credentials")) return ["System", "Credentials"];
   if (pathname.startsWith("/audit")) return ["System", "Audit log"];
   if (pathname.startsWith("/settings")) return ["System", "Settings"];
