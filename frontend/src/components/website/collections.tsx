@@ -77,7 +77,7 @@ const TitleCell = ({ title, sub, thumb }: { title: ReactNode; sub?: ReactNode; t
 const Status = ({ value }: { value: string }) => <Chip label={value} color={STATUS_COLOR[value] ?? "var(--text-dim)"} />;
 
 const SERVICE_ICONS = ["cpu", "cloud", "bolt", "phone", "brush", "users", "code", "server", "globe", "shield", "chart", "layers"] as const;
-const INDUSTRIES = ["Fintech", "Healthtech", "Supply chain", "Energy", "Media", "AI", "Mobile", "Retail"] as const;
+const INDUSTRIES = ["EdTech", "Mobile", "Developer tools", "Internal tools", "Media", "AI", "Fintech", "Healthtech", "Supply chain", "Energy", "Retail", "Open source"] as const;
 const POST_CATEGORIES = ["Engineering", "Design", "Culture", "Operations", "AI"] as const;
 const TEAMS = ["Engineering", "Platform", "Product", "AI", "Design", "Mobile", "Marketing", "Operations"] as const;
 const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship"] as const;
