@@ -31,4 +31,8 @@ export const env = {
   contactEmail: process.env.CONTACT_EMAIL || "",
   fromEmail: process.env.FROM_EMAIL || "Silifton <hello@silifton.com>",
   websiteHost: (process.env.WEBSITE_HOST || "silifton.com").replace(/^www\./, ""),
+  // Nimbus file storage (used for website image uploads when configured).
+  nimbusApiKey: process.env.NIMBUS_API_KEY || "",
+  nimbusBaseUrl: (process.env.NIMBUS_BASE_URL || "https://capi.tecsior.com/api/v1").replace(/\/$/, ""),
+  nimbusFolderId: process.env.NIMBUS_FOLDER_ID || "",
 };
